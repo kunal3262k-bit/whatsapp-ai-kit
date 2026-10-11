@@ -35,7 +35,7 @@ export async function aiChat(
     model: env.AI_MODEL,
     messages,
     temperature: opts.temperature ?? 0.6,
-    max_tokens: opts.maxTokens ?? 300,
+    max_tokens: opts.maxTokens ?? 600,
   };
 
   for (let attempt = 1; attempt <= 2; attempt++) {
