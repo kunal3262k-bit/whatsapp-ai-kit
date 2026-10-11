@@ -1,0 +1,30 @@
+# deps
+node_modules/
+.pnp/
+.pnp.js
+
+# build output
+dist/
+.next/
+out/
+build/
+*.tsbuildinfo
+
+# env & secrets
+.env
+.env.local
+.env.*.local
+*.pem
+service-account*.json
+
+# runtime data (local storage + auth)
+data/
+auth_state/
+*.log
+logs/
+
+# os / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -1,0 +1,53 @@
+{
+  "business": {
+    "name": "Your Business Name",
+    "type": "generic",
+    "about": "One or two lines about what the business does and who it serves.",
+    "location": "Area, City",
+    "hours": "Mon-Sat 10am-8pm",
+    "phone": "+91XXXXXXXXXX",
+    "website": ""
+  },
+  "persona": {
+    "name": "Assistant",
+    "role": "front-desk assistant",
+    "tone": "warm, concise, human, helpful",
+    "language": "auto"
+  },
+  "greeting": "Namaste! {{business_name}} mein aapka swagat hai 🙏 Main {{persona_name}} hoon. Aap kis cheez ke liye pooch rahe hain?",
+  "qualification": {
+    "intro": "Bas 2-3 chhoti baatein pooch loon taaki sahi madad kar sakoon:",
+    "fields": [
+      { "key": "need", "question": "Aapko exactly kya chahiye?", "type": "text" },
+      { "key": "timeline", "question": "Aap kab tak chahte hain?", "type": "choice", "options": ["Aaj", "Iss hafte", "Agle hafte", "Abhi bas pata kar raha hoon"] },
+      { "key": "budget", "question": "Aapka approx budget kitna hai?", "type": "choice", "options": ["5k se kam", "5k-10k", "10k se zyada"] },
+      { "key": "name", "question": "Aapka shubh naam?", "type": "text" }
+    ]
+  },
+  "qualify_rule": {
+    "min_answers": 3,
+    "disqualify_if": ["timeline=Abhi bas pata kar raha hoon"]
+  },
+  "post_qualify_message": "Dhanyavaad {{name}}! 🙏 Maine aapki details note kar li hain. Hamari team thodi der mein aapko confirm karne ke liye message karegi.",
+  "faqs": [
+    { "q": "aapka address kya hai", "a": "Hamara address: {{business_location}}. Timing: {{business_hours}}." },
+    { "q": "price kitna hai", "a": "Price requirement ke hisaab se badalta hai. Main details le loon, phir exact quote bhej dunga." }
+  ],
+  "handoff": {
+    "human_name": "Owner",
+    "human_phone": "",
+    "notify": true
+  },
+  "reminders": {
+    "enabled": true,
+    "followup_after_hours": 24,
+    "followup_message": "Hi {{name}}! Kya aapko abhi bhi madad chahiye? Main yahin hoon 😊",
+    "max_followups": 1
+  },
+  "guardrails": {
+    "max_messages_per_minute": 15,
+    "min_gap_ms": 1500,
+    "opt_out_words": ["stop", "unsubscribe", "band karo", "mat bhejo", "do not message"],
+    "never_say": ["guaranteed", "100% result", "pakka result"]
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "whatsapp-ai-kit",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Reusable WhatsApp AI lead-qualifier + booking + CRM delivery kit (free-tier stack).",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "setup": "node scripts/setup.mjs",
+    "dev": "npm run dev -w apps/bot",
+    "dev:bot": "npm run dev -w apps/bot",
+    "dev:dashboard": "npm run dev -w apps/dashboard",
+    "build": "npm run build -w apps/bot && npm run build -w apps/dashboard",
+    "typecheck": "npm run typecheck -w apps/bot && npm run typecheck -w apps/dashboard",
+    "start:bot": "npm run start -w apps/bot",
+    "start:dashboard": "npm run start -w apps/dashboard"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
