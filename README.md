@@ -71,6 +71,28 @@ Then in another terminal:
 npm run dev:dashboard       # http://localhost:3000  (admin + /offer + /pay)
 ```
 
+### 0. Ship to GitHub (before deploying)
+
+```bash
+# 0a. Sanity check before pushing
+npm run typecheck && npm run build
+
+# 0b. Create the repo (once)
+gh repo create whatsapp-ai-kit --public --source . --push
+# (no `gh` CLI? create an empty repo on github.com, then:)
+git remote add origin git@github.com:<you>/whatsapp-ai-kit.git
+
+# 0c. Push
+git push -u origin main
+```
+
+> Set your Git identity once so commits link to your GitHub account:
+> `git config user.name "You" && git config user.email "you@example.com"`
+> (use your GitHub noreply email from Settings → Emails). The repo keeps this
+> kit's `.gitignore` — **.env, auth_state/, config/*.json, and data/** never leave your machine.
+
+---
+
 ### 1. Connect a WhatsApp number
 Run `npm run dev:bot`. On first run a **QR code** prints in the terminal.
 On the phone: **WhatsApp → Settings → Linked devices → Link a device → scan**.

@@ -23,6 +23,10 @@ auth_state/
 *.log
 logs/
 
+# per-client configs (real numbers/guardrails — never commit)
+config/*.json
+!config/*.example.json
+
 # os / editor
 .DS_Store
 Thumbs.db
