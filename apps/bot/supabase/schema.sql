@@ -55,7 +55,12 @@ alter table reminders enable row level security;
 
 -- Read-only policies for the dashboard (anon key). The bot uses the
 -- service-role key and bypasses RLS.
-create policy if not exists "read contacts"  on contacts  for select to anon using (true);
-create policy if not exists "read messages"  on messages  for select to anon using (true);
-create policy if not exists "read leads"     on leads     for select to anon using (true);
-create policy if not exists "read reminders" on reminders for select to anon using (true);
+-- Note: Postgres has no "create policy if not exists"; drop-then-create is idempotent.
+drop policy if exists "read contacts"  on contacts;
+drop policy if exists "read messages"  on messages;
+drop policy if exists "read leads"     on leads;
+drop policy if exists "read reminders" on reminders;
+create policy "read contacts"  on contacts  for select to anon using (true);
+create policy "read messages"  on messages  for select to anon using (true);
+create policy "read leads"     on leads     for select to anon using (true);
+create policy "read reminders" on reminders for select to anon using (true);
