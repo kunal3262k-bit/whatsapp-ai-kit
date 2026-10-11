@@ -27,6 +27,9 @@ logs/
 config/*.json
 !config/*.example.json
 
+# outreach data (real business contacts — never commit)
+tools/outreach/*.csv
+
 # os / editor
 .DS_Store
 Thumbs.db
