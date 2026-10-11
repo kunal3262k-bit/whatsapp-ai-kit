@@ -10,6 +10,9 @@ out/
 build/
 *.tsbuildinfo
 
+# git worktrees
+.worktrees/
+
 # env & secrets
 .env
 .env.local
