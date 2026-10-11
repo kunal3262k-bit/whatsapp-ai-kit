@@ -4,7 +4,7 @@ A reusable, free-tier delivery kit for selling **AI WhatsApp assistants** to loc
 (salons, clinics, gyms, tuition centres, real-estate agents). Clone it, point it at a client,
 and hand over a working system the same day.
 
-> **Stack (100% free):** Baileys (WhatsApp Web) · Groq (Llama) · Supabase or JSON · Google Sheets ·
+> **Stack (100% free):** Baileys (WhatsApp Web) · Groq (GPT-OSS) · Supabase or JSON · Google Sheets ·
 > Next.js on Vercel. No paid APIs, no official WhatsApp Business API.
 
 ---

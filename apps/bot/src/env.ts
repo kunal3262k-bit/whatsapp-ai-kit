@@ -15,7 +15,7 @@ const EnvSchema = z.object({
   AI_PROVIDER: z.string().default('groq'),
   AI_API_KEY: z.string().default(''),
   AI_BASE_URL: z.string().default('https://api.groq.com/openai/v1'),
-  AI_MODEL: z.string().default('llama-3.3-70b-versatile'),
+  AI_MODEL: z.string().default('openai/gpt-oss-120b'),
 
   SUPABASE_URL: z.string().default(''),
   SUPABASE_SERVICE_ROLE_KEY: z.string().default(''),
