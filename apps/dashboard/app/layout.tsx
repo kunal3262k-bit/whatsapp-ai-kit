@@ -1,15 +1,19 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import Nav from '../components/Nav';
 
 export const metadata: Metadata = {
-  title: 'WhatsApp AI Kit — Leads',
-  description: 'Admin dashboard for the WhatsApp AI lead-qualifier.',
+  title: 'WhatsApp AI Kit',
+  description: 'Sales + delivery cockpit for the WhatsApp AI lead-qualifier.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Nav />
+        {children}
+      </body>
     </html>
   );
 }
