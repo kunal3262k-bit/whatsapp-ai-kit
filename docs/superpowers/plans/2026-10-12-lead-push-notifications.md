@@ -28,7 +28,7 @@
 1. **Missing/odd phone number** — `qualifiedLeadPayload`/`stuckPayload` must produce a valid `wa.me` URL from a phone with non-digits stripped, and never `wa.me/` empty with a crashing throw.
 2. **VAPID not configured** — the bot must keep running (no throw) when `VAPID_*` env is absent; `sendLeadPush` becomes a logged no-op.
 3. **Dead subscription** — a `404`/`410` from the push service must disable that row, not crash the send loop, and must not stop the other sends.
-4. **Idle-resume boundary** — a contact exactly at the threshold resumes; one under it does not; non-`human` contacts are untouched.
+4. **Idle-resume boundary** — a contact past the threshold (`> idleHours`) resumes; one exactly at or under it does not; non-`human` contacts are untouched.
 5. **Duplicate events** — two pushes for the same contact share the `lead-<jid>` tag so they collapse instead of stacking.
 
 ## File Structure

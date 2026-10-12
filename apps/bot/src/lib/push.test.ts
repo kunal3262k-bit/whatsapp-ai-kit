@@ -31,6 +31,11 @@ test('qualifiedLeadPayload strips non-digits from the phone', () => {
   assert.equal(p.url, 'https://wa.me/919812345678');
 });
 
+test('wa.me url stays safe when the phone has no digits', () => {
+  const p = stuckPayload({ name: 'X', phone: 'no-digits', jid: 'x@s.whatsapp.net', message: 'hi' });
+  assert.equal(p.url, '#');
+});
+
 test('qualifiedLeadPayload falls back to Lead when name is missing', () => {
   const p = qualifiedLeadPayload({ phone: '919812345678', jid: 'x@s.whatsapp.net', answers: { need: 'website' } });
   assert.equal(p.body, 'Lead - website');

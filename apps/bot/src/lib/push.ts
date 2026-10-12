@@ -44,7 +44,8 @@ export function buildPayload(p: PushPayload): string {
 }
 
 function waMe(phone: string): string {
-  return 'https://wa.me/' + phone.replace(/\D/g, '');
+  const digits = phone.replace(/\D/g, '');
+  return digits ? 'https://wa.me/' + digits : '#';
 }
 
 export interface QualifiedLeadInput {

@@ -259,8 +259,10 @@ async function handleStuck(
   contact.handoffAt = nowIso();
   contact.updatedAt = nowIso();
   await getStore().upsertContact(contact);
-  await deps.sendText(jid, 'Ek second, main team se confirm karke batata hoon');
   await sendLeadPush(stuckPayload({ name: contact.name, phone, jid, message: text }));
+  const holding = 'Ek second, main team se confirm karke batata hoon';
+  await deps.sendText(jid, holding);
+  await getStore().appendMessage({ jid, role: 'assistant', text: holding, at: nowIso() });
 }
 
 function newContact(jid: string, phone: string): Contact {
