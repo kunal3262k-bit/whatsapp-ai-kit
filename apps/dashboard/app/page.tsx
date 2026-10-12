@@ -1,4 +1,5 @@
 import { getAdminClient } from '../lib/supabase';
+import EnableNotifications from './enable-notifications';
 
 export const dynamic = 'force-dynamic';
 
@@ -58,11 +59,14 @@ export default async function HomePage() {
 
   return (
     <main className="mx-auto max-w-6xl p-6 sm:p-8">
-      <header className="flex items-center justify-between">
+      <header className="flex items-center justify-between gap-4">
         <h1 className="text-2xl font-bold">Leads Dashboard</h1>
-        <a href="/offer" className="rounded-lg bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand-dark">
-          View offer page →
-        </a>
+        <div className="flex items-center gap-3">
+          <EnableNotifications />
+          <a href="/offer" className="rounded-lg bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand-dark">
+            View offer page →
+          </a>
+        </div>
       </header>
 
       <section className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
