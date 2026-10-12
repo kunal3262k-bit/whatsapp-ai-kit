@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { buildPayload, isExpired, pushEnabled, toSubscription, qualifiedLeadPayload, stuckPayload } from './push';
+import { buildPayload, isExpired, pushEnabled, toSubscription, qualifiedLeadPayload, stuckPayload, sendLeadPush } from './push';
 
 test('buildPayload carries vibrate + requireInteraction and the tag', () => {
   const p = JSON.parse(buildPayload({ title: 't', body: 'b', url: 'u', tag: 'x' }));
@@ -64,4 +64,42 @@ test('stuckPayload titles as Needs you and shows the message', () => {
   assert.match(p.body, /do you do GST\?/);
   assert.equal(p.url, 'https://wa.me/919812345678');
   assert.equal(p.tag, 'lead-j@s.whatsapp.net');
+});
+
+test('sendLeadPush sends to every sub and prunes the expired one', async () => {
+  const sent: string[] = [];
+  const expired: string[] = [];
+  await sendLeadPush({ title: 't', body: 'b', url: 'u' }, {
+    loadSubs: async () => [
+      { endpoint: 'ok', p256dh: 'p', auth: 'a' },
+      { endpoint: 'dead', p256dh: 'p', auth: 'a' },
+    ],
+    send: async (sub) => { sent.push(sub.endpoint); if (sub.endpoint === 'dead') throw { statusCode: 410 }; },
+    markExpired: async (e) => { expired.push(e); },
+  });
+  assert.deepEqual(sent, ['ok', 'dead']);
+  assert.deepEqual(expired, ['dead']);
+});
+
+test('sendLeadPush swallows non-expired send errors and continues', async () => {
+  const sent: string[] = [];
+  const expired: string[] = [];
+  await sendLeadPush({ title: 't', body: 'b', url: 'u' }, {
+    loadSubs: async () => [
+      { endpoint: 'a', p256dh: 'p', auth: 'a' },
+      { endpoint: 'b', p256dh: 'p', auth: 'a' },
+    ],
+    send: async (sub) => { sent.push(sub.endpoint); if (sub.endpoint === 'a') throw new Error('network'); },
+    markExpired: async (e) => { expired.push(e); },
+  });
+  assert.deepEqual(sent, ['a', 'b']);
+  assert.deepEqual(expired, []);
+});
+
+test('sendLeadPush is a no-op (does not throw) when VAPID is missing', async () => {
+  await sendLeadPush(
+    { title: 't', body: 'b', url: 'u' },
+    undefined,
+    { VAPID_PUBLIC_KEY: '', VAPID_PRIVATE_KEY: '', SUPABASE_URL: '', SUPABASE_SERVICE_ROLE_KEY: '' }
+  );
 });
