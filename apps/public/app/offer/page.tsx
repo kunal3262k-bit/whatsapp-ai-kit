@@ -3,7 +3,8 @@ export const metadata = {
   description: 'WhatsApp AI assistants, booking systems, and content engines for local businesses.',
 };
 
-const WHATSAPP = 'https://wa.me/91XXXXXXXXXX?text=Hi%2C%20I%20want%20the%20AI%20assistant%20for%20my%20business';
+const WHATSAPP =
+  'https://wa.me/919717745568?text=Hi%2C%20I%20want%20the%20AI%20assistant%20for%20my%20business';
 
 const offers = [
   {
@@ -35,7 +36,7 @@ export default function OfferPage() {
   return (
     <main className="mx-auto max-w-5xl px-6 py-12">
       <header className="text-center">
-        <p className="text-sm font-semibold uppercase tracking-wide text-brand">AI Automation Studio</p>
+        <p className="text-sm font-semibold uppercase tracking-wide text-brand">Akra AI Automations</p>
         <h1 className="mt-3 text-3xl font-bold sm:text-5xl">
           Stop losing customers who message you after hours.
         </h1>
@@ -86,9 +87,6 @@ export default function OfferPage() {
         >
           Book a 10-minute call →
         </a>
-        <p className="mt-4 text-xs text-slate-400">
-          Replace the WhatsApp number in this page and in config/ with your own. No results are promised.
-        </p>
       </section>
     </main>
   );

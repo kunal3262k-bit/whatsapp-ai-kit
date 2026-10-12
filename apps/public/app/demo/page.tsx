@@ -75,8 +75,8 @@ export default function DemoPage() {
     <main className="mx-auto max-w-6xl px-6 py-8">
       <h1 className="text-2xl font-bold">Interactive Demo</h1>
       <p className="mt-1 text-slate-600">
-        Try it live — pick an industry and chat. The lead panel fills in real time, exactly like the
-        real bot writes to your CRM.
+        Try it live — pick an industry and chat. The lead panel fills in real time, exactly like our
+        assistant does.
       </p>
 
       <div className="mt-5 flex flex-wrap gap-2">
@@ -147,7 +147,7 @@ export default function DemoPage() {
         <aside className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
           <h2 className="font-semibold">Lead extraction (live)</h2>
           <p className="mt-1 text-xs text-slate-500">
-            This is what gets pushed to Google Sheets / Supabase.
+            This is what the assistant captures for you.
           </p>
 
           <div className="mt-4 space-y-3">
