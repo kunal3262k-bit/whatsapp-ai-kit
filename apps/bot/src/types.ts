@@ -15,6 +15,7 @@ export interface Contact {
   answers: Record<string, string>;
   followupsSent: number;
   lastInboundAt?: string;
+  handoffAt?: string;
   createdAt: string;
   updatedAt: string;
 }

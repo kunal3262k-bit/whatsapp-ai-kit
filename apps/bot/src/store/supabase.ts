@@ -30,6 +30,7 @@ export class SupabaseStore implements Store {
       answers: data.answers ?? {},
       followupsSent: data.followups_sent ?? 0,
       lastInboundAt: data.last_inbound_at ?? undefined,
+      handoffAt: data.handoff_at ?? undefined,
       createdAt: data.created_at,
       updatedAt: data.updated_at,
     };
@@ -45,6 +46,7 @@ export class SupabaseStore implements Store {
       answers: c.answers,
       followups_sent: c.followupsSent,
       last_inbound_at: c.lastInboundAt ?? null,
+      handoff_at: c.handoffAt ?? null,
       created_at: c.createdAt,
       updated_at: c.updatedAt,
     });
