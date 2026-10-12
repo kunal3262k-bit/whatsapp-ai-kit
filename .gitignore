@@ -13,6 +13,9 @@ build/
 # git worktrees
 .worktrees/
 
+# superpowers SDD scratch (ledger, briefs, review packages)
+.superpowers/
+
 # env & secrets
 .env
 .env.local
