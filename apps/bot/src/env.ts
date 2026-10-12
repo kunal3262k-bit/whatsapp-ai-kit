@@ -20,6 +20,11 @@ const EnvSchema = z.object({
   SUPABASE_URL: z.string().default(''),
   SUPABASE_SERVICE_ROLE_KEY: z.string().default(''),
 
+  VAPID_PUBLIC_KEY: z.string().default(''),
+  VAPID_PRIVATE_KEY: z.string().default(''),
+  VAPID_SUBJECT: z.string().default('mailto:owner@example.com'),
+  HANDOFF_IDLE_HOURS: z.coerce.number().default(24),
+
   GOOGLE_SHEET_WEBHOOK_URL: z.string().default(''),
   GOOGLE_SHEET_SECRET: z.string().default('change-me'),
 

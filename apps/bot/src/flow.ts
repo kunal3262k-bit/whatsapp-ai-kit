@@ -1,5 +1,8 @@
 import { baseVars, config, fill } from './config';
+import { env } from './env';
 import { aiChat, aiEnabled } from './lib/ai';
+import { shouldResume } from './lib/handoff';
+import { qualifiedLeadPayload, sendLeadPush, stuckPayload } from './lib/push';
 import { logger } from './logger';
 import { pushLeadToSheet } from './leads';
 import { scheduleFollowup } from './reminders';
@@ -118,6 +121,12 @@ export async function handleIncoming(
   await store.appendMessage({ jid, role: 'user', text, at: nowIso() });
   contact.lastInboundAt = nowIso();
 
+  // --- auto-resume a handed-off contact after it has been idle long enough ---
+  if (shouldResume(contact, Date.now(), env.HANDOFF_IDLE_HOURS)) {
+    contact.status = contact.step >= config.qualification.fields.length ? 'qualified' : 'qualifying';
+    contact.handoffAt = undefined;
+  }
+
   // --- human took over: stay silent ---
   if (contact.status === 'human') {
     await store.upsertContact(contact);
@@ -131,6 +140,8 @@ export async function handleIncoming(
       if (ans) {
         await deps.sendText(jid, ans);
         await store.appendMessage({ jid, role: 'assistant', text: ans, at: nowIso() });
+      } else if (aiEnabled()) {
+        await handleStuck(jid, phone, contact, text, deps);
       }
     }
     await store.upsertContact(contact);
@@ -158,12 +169,17 @@ export async function handleIncoming(
   }
 
   // --- mid-qualification ---
-  // If it's a question rather than an answer, answer it and re-ask.
+  // If it's a question rather than an answer, answer it and re-ask. If we
+  // can't answer it and the AI is up, hand off instead of looping the question.
   if (looksLikeQuestion(text)) {
     const ans = matchFaq(text) ?? (await aiAnswer(text, []));
     if (ans) {
       await deps.sendText(jid, ans);
       await store.appendMessage({ jid, role: 'assistant', text: ans, at: nowIso() });
+    }
+    if (!ans && aiEnabled()) {
+      await handleStuck(jid, phone, contact, text, deps);
+      return;
     }
     const requeue = askQuestion(contact.step);
     await deps.sendText(jid, requeue);
@@ -221,11 +237,7 @@ export async function handleIncoming(
 
   if (qualified) {
     if (config.handoff.notify) {
-      const summary =
-        `🔥 New qualified lead — ${config.business.name}\n` +
-        `Name: ${contact.name ?? '—'}\nPhone: ${phone}\n` +
-        config.qualification.fields.map((f) => `${f.key}: ${contact.answers[f.key] ?? '—'}`).join('\n');
-      await deps.notifyOwner(summary);
+      await sendLeadPush(qualifiedLeadPayload({ name: contact.name, phone, jid, answers: contact.answers }));
     }
     if (config.reminders.enabled && contact.followupsSent < config.reminders.max_followups) {
       await scheduleFollowup(jid, contact.name, config.reminders.followup_after_hours);
@@ -234,6 +246,23 @@ export async function handleIncoming(
     }
   }
   logger.info(`✅ ${qualified ? 'QUALIFIED' : 'disqualified'} lead: ${phone}`);
+}
+
+async function handleStuck(
+  jid: string,
+  phone: string,
+  contact: Contact,
+  text: string,
+  deps: FlowDeps
+): Promise<void> {
+  contact.status = 'human';
+  contact.handoffAt = nowIso();
+  contact.updatedAt = nowIso();
+  await getStore().upsertContact(contact);
+  await sendLeadPush(stuckPayload({ name: contact.name, phone, jid, message: text }));
+  const holding = 'Ek second, main team se confirm karke batata hoon';
+  await deps.sendText(jid, holding);
+  await getStore().appendMessage({ jid, role: 'assistant', text: holding, at: nowIso() });
 }
 
 function newContact(jid: string, phone: string): Contact {
