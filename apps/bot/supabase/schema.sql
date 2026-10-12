@@ -47,23 +47,22 @@ create table if not exists reminders (
 );
 create index if not exists reminders_due_idx on reminders (done, run_at);
 
--- Row Level Security: enable, and allow the dashboard's anon key to READ only.
+-- Row Level Security: enable with NO public policies (default deny).
+-- Only the service-role key (bot + admin app, server-side) may read/write;
+-- the public anon key is granted nothing.
 alter table contacts  enable row level security;
 alter table messages  enable row level security;
 alter table leads     enable row level security;
 alter table reminders enable row level security;
 
--- Read-only policies for the dashboard (anon key). The bot uses the
--- service-role key and bypasses RLS.
--- Note: Postgres has no "create policy if not exists"; drop-then-create is idempotent.
+-- Remove the old wide-open anon read policies (idempotent).
 drop policy if exists "read contacts"  on contacts;
 drop policy if exists "read messages"  on messages;
 drop policy if exists "read leads"     on leads;
 drop policy if exists "read reminders" on reminders;
-create policy "read contacts"  on contacts  for select to anon using (true);
-create policy "read messages"  on messages  for select to anon using (true);
-create policy "read leads"     on leads     for select to anon using (true);
-create policy "read reminders" on reminders for select to anon using (true);
+
+-- Belt-and-suspenders: revoke direct table privileges from the public roles.
+revoke all on contacts, messages, leads, reminders from anon, authenticated;
 
 -- Web Push subscriptions (owner devices). Only the service role touches this.
 create table if not exists push_subscriptions (
