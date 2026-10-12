@@ -10,11 +10,12 @@
     "setup": "node scripts/setup.mjs",
     "dev": "npm run dev -w apps/bot",
     "dev:bot": "npm run dev -w apps/bot",
-    "dev:dashboard": "npm run dev -w apps/dashboard",
-    "build": "npm run build -w apps/bot && npm run build -w apps/dashboard",
-    "typecheck": "npm run typecheck -w apps/bot && npm run typecheck -w apps/dashboard",
-    "start:bot": "npm run start -w apps/bot",
-    "start:dashboard": "npm run start -w apps/dashboard"
+    "dev:public": "npm run dev -w apps/public",
+    "build:public": "npm run build -w apps/public",
+    "start:public": "npm run start -w apps/public",
+    "typecheck": "npm run typecheck -w apps/bot && npm run typecheck -w apps/public",
+    "build": "npm run build -w apps/bot && npm run build -w apps/public",
+    "start:bot": "npm run start -w apps/bot"
   },
   "engines": {
     "node": ">=20"
