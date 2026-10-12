@@ -64,3 +64,19 @@ create policy "read contacts"  on contacts  for select to anon using (true);
 create policy "read messages"  on messages  for select to anon using (true);
 create policy "read leads"     on leads     for select to anon using (true);
 create policy "read reminders" on reminders for select to anon using (true);
+
+-- Web Push subscriptions (owner devices). Only the service role touches this.
+create table if not exists push_subscriptions (
+  id          bigint generated always as identity primary key,
+  endpoint    text not null unique,
+  p256dh      text not null,
+  auth        text not null,
+  user_agent  text,
+  enabled     boolean not null default true,
+  created_at  timestamptz not null default now(),
+  last_seen_at timestamptz not null default now()
+);
+alter table push_subscriptions enable row level security;
+
+-- Bot-stuck handoff timestamp (for auto-resume).
+alter table contacts add column if not exists handoff_at timestamptz;
