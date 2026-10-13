@@ -3,7 +3,8 @@ import './globals.css';
 import Nav from '../components/Nav';
 
 export const metadata: Metadata = {
-  title: 'Admin',
+  title: 'Akra Admin',
+  robots: { index: false, follow: false },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

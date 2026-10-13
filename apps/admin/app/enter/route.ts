@@ -1,10 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import {
-  signSession,
-  timingSafeEqualStr,
-  SESSION_COOKIE,
-  SESSION_TTL_MS,
-} from '../../lib/auth';
+import { signSession, timingSafeEqualStr, SESSION_COOKIE, SESSION_TTL_MS } from '../../lib/auth';
+import { notFoundResponse } from '../../lib/http';
 
 export const dynamic = 'force-dynamic';
 
@@ -13,7 +9,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   const expected = process.env.ADMIN_KEY;
   const secret = process.env.ADMIN_SESSION_SECRET;
   if (!expected || !secret || !timingSafeEqualStr(key, expected)) {
-    return new NextResponse('Not Found', { status: 404 });
+    return notFoundResponse();
   }
   const res = NextResponse.redirect(new URL('/', req.url));
   res.cookies.set(SESSION_COOKIE, await signSession(Date.now() + SESSION_TTL_MS, secret), {

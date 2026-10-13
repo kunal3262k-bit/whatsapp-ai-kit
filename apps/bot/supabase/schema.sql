@@ -79,3 +79,8 @@ alter table push_subscriptions enable row level security;
 
 -- Bot-stuck handoff timestamp (for auto-resume).
 alter table contacts add column if not exists handoff_at timestamptz;
+
+-- Leads CRM status, set by the admin app. Values:
+-- 'new' | 'contacted' | 'qualified' | 'disqualified' | 'human'.
+alter table leads add column if not exists status text not null default 'new';
+create index if not exists leads_status_idx on leads (status);

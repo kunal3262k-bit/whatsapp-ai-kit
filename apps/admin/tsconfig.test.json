@@ -11,5 +11,6 @@
     "skipLibCheck": true,
     "types": ["node"]
   },
-  "include": ["lib/**/*.ts"]
+  "include": ["lib/**/*.ts"],
+  "exclude": ["node_modules", "lib/session.ts"]
 }

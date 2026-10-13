@@ -76,6 +76,7 @@ export class SupabaseStore implements Store {
       phone: l.phone,
       fields: l.fields,
       qualified: l.qualified,
+      status: l.qualified ? 'qualified' : 'disqualified',
       created_at: l.createdAt,
     });
     if (error) throw error;
