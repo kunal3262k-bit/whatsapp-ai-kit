@@ -38,6 +38,69 @@ function extractText(m: proto.IMessage | null | undefined): string {
   );
 }
 
+export type SkipReason =
+  | 'not-live'
+  | 'no-message'
+  | 'from-me'
+  | 'no-jid'
+  | 'status-broadcast'
+  | 'group'
+  | 'not-a-chat'
+  | 'country-not-allowed'
+  | 'empty-text';
+
+export interface IncomingDecision {
+  chatJid: string;
+  /** Best-known phone digits (from the PN JID). Empty when only a LID is available. */
+  phone: string;
+  text: string;
+  skip?: SkipReason;
+}
+
+/**
+ * Decide whether an incoming upsert message should be handled.
+ *
+ * WhatsApp now routes most chats via LID (`<id>@lid`) instead of phone-number
+ * JIDs (`<phone>@s.whatsapp.net`). We accept both: reply to the stable chat JID,
+ * but resolve the real phone from `senderPn`/`participantPn` for allowlist checks.
+ */
+export function decideIncoming(
+  key: {
+    type: string;
+    fromMe: boolean;
+    remoteJid?: string | null;
+    senderPn?: string | null;
+    participantPn?: string | null;
+    message?: proto.IMessage | null;
+  },
+  opts: { allowedCodes: string[]; ignoreGroups: boolean }
+): IncomingDecision {
+  const chatJid = key.remoteJid ?? '';
+  const text = extractText(key.message);
+  const base: IncomingDecision = { chatJid, phone: '', text };
+
+  if (key.type !== 'notify') return { ...base, skip: 'not-live' };
+  if (!key.message) return { ...base, skip: 'no-message' };
+  if (key.fromMe) return { ...base, skip: 'from-me' };
+  if (!chatJid) return { ...base, skip: 'no-jid' };
+  if (chatJid === 'status@broadcast') return { ...base, skip: 'status-broadcast' };
+  if (opts.ignoreGroups && chatJid.endsWith('@g.us')) return { ...base, skip: 'group' };
+
+  const isPn = chatJid.endsWith('@s.whatsapp.net');
+  const isLid = chatJid.endsWith('@lid');
+  if (!isPn && !isLid) return { ...base, skip: 'not-a-chat' };
+
+  const pnJid = (key.senderPn || key.participantPn || '').trim();
+  const phone = (isPn ? chatJid : pnJid).split('@')[0] ?? '';
+  const decision: IncomingDecision = { chatJid, phone, text };
+
+  if (phone && opts.allowedCodes.length && !opts.allowedCodes.some((cc) => phone.startsWith(cc))) {
+    return { ...decision, skip: 'country-not-allowed' };
+  }
+  if (!text) return { ...decision, skip: 'empty-text' };
+  return decision;
+}
+
 function chunk(text: string, size = 4000): string[] {
   if (text.length <= size) return [text];
   const out: string[] = [];
@@ -123,23 +186,25 @@ export async function startWhatsApp(): Promise<void> {
   });
 
   sock.ev.on('messages.upsert', async ({ messages, type }) => {
-    if (type !== 'notify') return;
     for (const msg of messages) {
       try {
-        if (!msg.message || msg.key.fromMe) continue;
-        const jid = msg.key.remoteJid;
-        if (!jid) continue;
-        if (jid === 'status@broadcast') continue;
-        if (env.IGNORE_GROUPS === 'true' && jid.endsWith('@g.us')) continue;
-        if (!jid.endsWith('@s.whatsapp.net')) continue;
+        const d = decideIncoming(
+          {
+            type,
+            fromMe: !!msg.key.fromMe,
+            remoteJid: msg.key.remoteJid,
+            senderPn: msg.key.senderPn,
+            participantPn: msg.key.participantPn,
+            message: msg.message,
+          },
+          { allowedCodes, ignoreGroups: env.IGNORE_GROUPS === 'true' }
+        );
+        logger.info(
+          `📥 upsert type=${type} jid=${d.chatJid || '—'} phone=${d.phone || '—'} skip=${d.skip ?? 'none'} text=${JSON.stringify(d.text.slice(0, 60))}`
+        );
+        if (d.skip) continue;
 
-        const phone = jid.split('@')[0]!;
-        if (allowedCodes.length && !allowedCodes.some((cc) => phone.startsWith(cc))) continue;
-
-        const text = extractText(msg.message);
-        if (!text) continue;
-
-        await handleIncoming(jid, phone, text, { sendText, notifyOwner }, msg.pushName ?? undefined);
+        await handleIncoming(d.chatJid, d.phone, d.text, { sendText, notifyOwner }, msg.pushName ?? undefined);
       } catch (err) {
         logger.error(`Message handling failed: ${(err as Error).message}`);
       }
