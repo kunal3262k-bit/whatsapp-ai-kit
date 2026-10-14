@@ -47,7 +47,89 @@ export function hook(category: string): string {
   return 'customer enquiries';
 }
 
+export interface ProblemFix {
+  problem: string;
+  help: string;
+}
+
+/**
+ * Pick the pain point that fits a business category (case-insensitive keyword
+ * match) and the one-line way our WhatsApp bot fixes it. Unknown categories get
+ * a sensible generic pitch.
+ */
+export function categoryProblemFix(category: string): ProblemFix {
+  const c = (category ?? '').toLowerCase();
+  if (c.includes('cafe') || c.includes('restaurant'))
+    return {
+      problem: 'WhatsApp par order lena, menu batana aur delivery coordinate karna sab manual hai',
+      help: 'main ek AI order assistant set karta hoon jo menu bhejta hai, order confirm karta hai aur har order record karta hai',
+    };
+  if (c.includes('boutique') || c.includes('garment') || c.includes('saree'))
+    return {
+      problem: 'Customers din bhar price, size aur photo poochte rehte hain aur sahi follow-up nahi hota',
+      help: 'main ek AI assistant set karta hoon jo catalogue aur price bhejta hai, order capture karta hai aur follow-up karta hai',
+    };
+  if (c.includes('salon') || c.includes('parlour') || c.includes('beauty'))
+    return {
+      problem: 'Appointment booking aur reminders manual hain, no-shows zyada hote hain aur package follow-up reh jaata hai',
+      help: 'main ek AI assistant set karta hoon jo booking leta hai, reminders bhejta hai aur packages upsell karta hai',
+    };
+  if (c.includes('dental'))
+    return {
+      problem: 'Patients call ya WhatsApp se book karte hain, no-shows hote hain aur follow-ups manual reh jaate hain',
+      help: 'main ek AI assistant set karta hoon jo appointment book karta hai, reminders aur post-treatment care bhejta hai, aur patient log rakhta hai',
+    };
+  if (c.includes('clinic') || c.includes('physio') || c.includes('gynec'))
+    return {
+      problem: 'Appointment overload hai, patients ko follow-up chahiye aur WhatsApp queries 24x7 aati hain',
+      help: 'main ek AI assistant set karta hoon jo appointments leta hai, follow-up karta hai aur har query handle karta hai',
+    };
+  if (c.includes('gym') || c.includes('fitness') || c.includes('yoga'))
+    return {
+      problem: 'Membership renewals chhoot jaate hain, class bookings manual hain aur Instagram leads follow nahi hote',
+      help: 'main ek AI assistant set karta hoon jo renewals, class booking aur naye leads sab handle karta hai',
+    };
+  if (c.includes('bakery') || c.includes('sweet') || c.includes('confection'))
+    return {
+      problem: 'Festive aur advance orders WhatsApp par manage karna messy ho jaata hai',
+      help: 'main ek AI order assistant set karta hoon jo orders leta hai, confirm karta hai aur reminder bhejta hai',
+    };
+  if (c.includes('pharmacy') || c.includes('medical') || c.includes('medicos'))
+    return {
+      problem: 'Medicine availability aur refill ke sawaal WhatsApp par aate hain aur order coordinate karna manual hai',
+      help: 'main ek AI assistant set karta hoon jo refill reminders bhejta hai aur orders le leta hai',
+    };
+  if (c.includes('real estate') || c.includes('property') || c.includes('builder'))
+    return {
+      problem: 'Roz sau se zyada inquiries aati hain, follow-up manual hai aur leads thande pad jaate hain',
+      help: 'main ek AI assistant set karta hoon jo har inquiry ko turant qualify karta hai, property match bhejta hai aur follow-up karta hai',
+    };
+  if (c.includes('tuition') || c.includes('coaching') || c.includes('academy'))
+    return {
+      problem: 'Fee reminders manual hain aur parents ke sawaalon ka jawab dene mein time chala jaata hai',
+      help: 'main ek AI assistant set karta hoon jo fee reminders bhejta hai aur parents ke sawaal khud handle karta hai',
+    };
+  if (c.includes('electronic'))
+    return {
+      problem: 'Product, price aur availability ke sawaal din bhar aate rehte hain',
+      help: 'main ek AI assistant set karta hoon jo in sawaalon ka turant jawab deta hai aur order capture karta hai',
+    };
+  return {
+    problem: 'WhatsApp par aane wali enquiries ka reply late ho jaata hai aur kai leads chhoot jaati hain',
+    help: 'main ek AI assistant set karta hoon jo turant reply karta hai aur har lead save karta hai',
+  };
+}
+
 export const PITCH_ANGLES: PitchAngle[] = [
+  {
+    id: 'problem-fix',
+    label: 'Problem → Fix',
+    description: 'Focus: name the exact problem in their business and how the bot fixes it.',
+    template: (b) => {
+      const { problem, help } = categoryProblemFix(b.category);
+      return `Namaste ${b.name} 🙏 ${problem}. ${help} — aapke WhatsApp number par ek din mein set ho jaata hai. Kya main ek 90-second demo bhej sakta hoon? ${OPT_OUT}`;
+    },
+  },
   {
     id: 'lost-leads',
     label: 'Missed enquiries',

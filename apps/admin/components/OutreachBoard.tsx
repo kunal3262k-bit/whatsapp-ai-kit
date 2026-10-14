@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, type ChangeEvent } from 'react';
 import {
   PITCH_ANGLES,
   SEED_BUSINESSES,
@@ -49,6 +49,9 @@ export default function OutreachBoard() {
   const [advLabel, setAdvLabel] = useState('');
   const [advAmount, setAdvAmount] = useState('');
   const [copied, setCopied] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [uploadNotice, setUploadNotice] = useState('');
+  const [uploadError, setUploadError] = useState(false);
 
   useEffect(() => {
     setBiz(load(LIST_KEY, SEED_BUSINESSES));
@@ -92,6 +95,43 @@ export default function OutreachBoard() {
       persistAdvances([...advances, { label: advLabel.trim() || 'Client', amount }]);
       setAdvLabel('');
       setAdvAmount('');
+    }
+  }
+
+  async function onFileChange(e: ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    setUploadNotice('');
+    setUploadError(false);
+    try {
+      const fd = new FormData();
+      fd.append('file', file);
+      const res = await fetch('/api/outreach/import', { method: 'POST', body: fd });
+      const data = (await res.json().catch(() => ({}))) as {
+        count?: number;
+        rows?: Biz[];
+        warning?: string;
+        error?: string;
+      };
+      if (!res.ok) {
+        setUploadError(true);
+        setUploadNotice(data.error || `Upload failed (${res.status})`);
+      } else {
+        const rows = data.rows ?? [];
+        if (rows.length) {
+          setBiz(rows);
+          setIdx(0);
+          localStorage.setItem(LIST_KEY, JSON.stringify(rows));
+        }
+        setUploadNotice(data.warning || `Imported ${data.count ?? rows.length} clients`);
+      }
+    } catch (err) {
+      setUploadError(true);
+      setUploadNotice(err instanceof Error ? err.message : 'Upload failed');
+    } finally {
+      setUploading(false);
+      e.target.value = '';
     }
   }
 
@@ -206,8 +246,20 @@ export default function OutreachBoard() {
           </div>
 
           <details className="mt-4">
-            <summary className="cursor-pointer text-sm font-medium text-zinc-400">Import your ICP (CSV)</summary>
-            <p className="mt-2 text-xs text-zinc-500">One per line: name,category,area,phone</p>
+            <summary className="cursor-pointer text-sm font-medium text-zinc-400">Import your ICP (CSV / XLSX)</summary>
+            <p className="mt-2 text-xs text-zinc-500">Upload your 100-client list — .csv or .xlsx</p>
+            <input
+              type="file"
+              accept=".csv,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv"
+              onChange={onFileChange}
+              disabled={uploading}
+              className="mt-2 block w-full text-xs text-zinc-400 file:mr-2 file:cursor-pointer file:rounded-md file:border file:border-zinc-700 file:bg-zinc-900 file:px-2.5 file:py-1.5 file:text-xs file:font-medium file:text-zinc-300 hover:file:border-brand hover:file:text-brand disabled:opacity-50"
+            />
+            {uploading && <p className="mt-2 text-xs text-zinc-500">Uploading…</p>}
+            {uploadNotice && (
+              <p className={`mt-2 text-xs ${uploadError ? 'text-rose-400' : 'text-brand'}`}>{uploadNotice}</p>
+            )}
+            <p className="mt-3 text-xs text-zinc-500">Or paste below — one per line: name,category,area,phone</p>
             <textarea
               value={importText}
               onChange={(e) => setImportText(e.target.value)}

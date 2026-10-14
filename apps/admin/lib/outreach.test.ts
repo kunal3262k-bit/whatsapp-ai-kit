@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {
   PITCH_ANGLES,
   SEED_BUSINESSES,
+  categoryProblemFix,
   isTrackStatus,
   parseProspectCsv,
   toWaNumber,
@@ -18,13 +19,47 @@ test('seed list is populated and well-formed', () => {
   }
 });
 
-test('exposes five pitch angles and each fills a message', () => {
-  assert.equal(PITCH_ANGLES.length, 5);
+test('exposes six pitch angles and each fills a message', () => {
+  assert.equal(PITCH_ANGLES.length, 6);
   for (const p of PITCH_ANGLES) {
     const msg = p.template(SEED_BUSINESSES[0]!);
     assert.ok(msg.includes(SEED_BUSINESSES[0]!.name));
     assert.ok(msg.includes('dobara message nahi karunga'));
   }
+});
+
+test('categoryProblemFix maps categories to a problem + fix (case-insensitive)', () => {
+  const cafe = categoryProblemFix('Cafe & Restaurant');
+  assert.ok(cafe.problem.includes('menu batana'));
+  assert.ok(cafe.help.includes('order assistant'));
+
+  const dental = categoryProblemFix('dental');
+  assert.ok(dental.problem.includes('no-shows'));
+  assert.ok(dental.help.includes('post-treatment care'));
+
+  const estate = categoryProblemFix('Real Estate');
+  assert.ok(estate.problem.includes('sau se zyada inquiries'));
+  assert.ok(estate.help.includes('property match'));
+
+  const pharmacy = categoryProblemFix('Medical Pharmacy');
+  assert.ok(pharmacy.problem.includes('refill'));
+  assert.ok(pharmacy.help.includes('refill reminders'));
+
+  const unknown = categoryProblemFix('miscellaneous');
+  assert.ok(unknown.problem.includes('reply late'));
+  assert.ok(unknown.help.includes('turant reply'));
+});
+
+test('PITCH_ANGLES[0] is the problem-fix default with name, problem and help', () => {
+  const first = PITCH_ANGLES[0]!;
+  assert.equal(first.id, 'problem-fix');
+  const biz = { name: 'Kalra Sweets', category: 'sweets', area: 'Krishna Nagar', phone: '8826336168' };
+  const { problem, help } = categoryProblemFix(biz.category);
+  const msg = first.template(biz);
+  assert.ok(msg.includes(biz.name));
+  assert.ok(msg.includes(problem));
+  assert.ok(msg.includes(help));
+  assert.ok(msg.includes('90-second demo'));
 });
 
 test('toWaNumber prefixes 91 for 10-digit locals, leaves others intact', () => {
