@@ -43,6 +43,7 @@ export function hook(category: string): string {
   if (c.includes('tuition')) return 'admission enquiries';
   if (c.includes('boutique') || c.includes('garment') || c.includes('saree')) return 'customer enquiries';
   if (c.includes('electronic')) return 'product enquiries';
+  if (c.includes('lawyer') || c.includes('advocate') || c.includes('notary') || c.includes('legal') || c.includes('vakil')) return 'client enquiries';
   if (c.includes('dry fruit') || c.includes('bakery')) return 'orders';
   return 'customer enquiries';
 }
@@ -113,6 +114,11 @@ export function categoryProblemFix(category: string): ProblemFix {
     return {
       problem: 'Product, price aur availability ke sawaal din bhar aate rehte hain',
       help: 'main ek AI assistant set karta hoon jo in sawaalon ka turant jawab deta hai aur order capture karta hai',
+    };
+  if (c.includes('lawyer') || c.includes('advocate') || c.includes('notary') || c.includes('legal') || c.includes('vakil'))
+    return {
+      problem: 'Client inquiries WhatsApp par aate hain par har query ka reply, consultation booking aur follow-up manual reh jaata hai',
+      help: 'main ek AI assistant set karta hoon jo har query ka turant reply karta hai, matter ke hisaab se details leta hai aur consultation slot book karta hai',
     };
   return {
     problem: 'WhatsApp par aane wali enquiries ka reply late ho jaata hai aur kai leads chhoot jaati hain',

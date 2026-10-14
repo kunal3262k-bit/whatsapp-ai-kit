@@ -116,4 +116,25 @@ export const DEMO_PRESETS: DemoPreset[] = [
     handoff:
       'Order confirm ho gaya! 🧾 Main kitchen ko bhej raha hoon — 15–20 min me ready. Payment UPI/cash. Aapka order record bhi save ho gaya. Shukriya 🙏',
   },
+  {
+    id: 'legal',
+    label: 'Lawyer / Notary',
+    emoji: '⚖️',
+    business: 'Sharma Legal Associates',
+    greeting: 'Namaste! Sharma Legal Associates mein aapka swagat hai 🙏 Main aapki query note kar leta hoon.',
+    intro: 'Sahi salah ke liye bas 3 chhoti details batayein:',
+    fields: [
+      {
+        key: 'matter',
+        question: 'Aapko kis kaam ke liye help chahiye?',
+        type: 'choice',
+        options: ['Property / registry', 'Rent agreement', 'Affidavit / notary', 'Will / power of attorney', 'Court / legal case', 'Other'],
+      },
+      { key: 'urgency', question: 'Kab tak chahiye?', type: 'choice', options: ['Aaj hi', 'Iss hafte', 'Agle hafte', 'Sirf jaankari chahiye'] },
+      { key: 'mode', question: 'Kaise baat karna chahenge?', type: 'choice', options: ['Office visit', 'Phone / WhatsApp consult', 'Document bhejna hai'] },
+      { key: 'name', question: 'Aapka shubh naam?', type: 'text' },
+    ],
+    handoff:
+      'Dhanyavaad! 📝 Aapki query note ho gayi. Hamari team aapko consultation slot confirm karne ke liye contact karegi.',
+  },
 ];
