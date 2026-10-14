@@ -11,6 +11,9 @@ out/
 build/
 *.tsbuildinfo
 
+# vercel CLI link state
+.vercel/
+
 # git worktrees
 .worktrees/
 
