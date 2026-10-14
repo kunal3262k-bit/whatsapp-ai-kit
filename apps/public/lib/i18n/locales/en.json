@@ -1,0 +1,184 @@
+{
+  "meta": {
+    "title": "Akra AI — AI WhatsApp Sales Assistant | Pay once, no monthly fees",
+    "description": "AI WhatsApp assistant that greets, qualifies and answers customers 24/7, then alerts you instantly on WhatsApp. One-time setup, no subscriptions, delivered same day. Works worldwide."
+  },
+  "common": {
+    "whatsappCta": "Talk to Live Demo on WhatsApp",
+    "whatsappShort": "WhatsApp us",
+    "changeCountry": "Change country / language",
+    "mostPopular": "Most Popular",
+    "oneTime": "one-time setup",
+    "delivery": "Delivery",
+    "payOnce": "Pay once. No monthly fees. Ever.",
+    "language": "Language",
+    "country": "Country"
+  },
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "demo": "Live Demo",
+    "pricing": "Pricing",
+    "faq": "FAQ"
+  },
+  "hero": {
+    "badge": "AI WhatsApp Sales Assistant",
+    "headline": "Your AI sales assistant on WhatsApp",
+    "headline2": "Pay once. No monthly fees. Delivered same day. Works worldwide.",
+    "sub": "Greets customers, qualifies leads, answers questions, and alerts you instantly on WhatsApp. One-time setup. No subscriptions.",
+    "ctaSecondary": "Try the live demo",
+    "trust": "No monthly fees · Same-day delivery · Works on your own number"
+  },
+  "social": {
+    "text": "Used by clinics, coaches, real-estate, salons, agencies & online businesses worldwide"
+  },
+  "how": {
+    "title": "How it works",
+    "subtitle": "From a 10-minute chat to a working assistant the same day.",
+    "steps": [
+      { "title": "Tell us about your business", "body": "A quick 10-minute chat: what you sell, the questions customers ask, and how you qualify a good lead." },
+      { "title": "We build your assistant", "body": "We configure your AI assistant on your own WhatsApp number — greeting, qualification questions, FAQs and alerts." },
+      { "title": "Test it live with us", "body": "You chat with it before it goes live. We tune the tone, answers and follow-ups until it sounds like you." },
+      { "title": "Go live & get leads", "body": "Every enquiry is qualified, logged and pushed to you instantly on WhatsApp. You just close." }
+    ]
+  },
+  "demoSection": {
+    "eyebrow": "Live demo",
+    "title": "Try the assistant yourself",
+    "subtitle": "Pick an industry and chat with a real working assistant — watch it qualify the lead in real time.",
+    "cta": "Open the interactive demo"
+  },
+  "pricing": {
+    "eyebrow": "Pricing",
+    "title": "Simple, one-time pricing",
+    "subtitle": "Pick the package that fits. One payment, no subscriptions, and a system that works — or we fix it free.",
+    "cta": "Talk to Live Demo on WhatsApp",
+    "faqNote": "Prices shown in {{currency}}. Final quote confirmed on WhatsApp.",
+    "guarantee": "If it doesn't capture real leads in the first 7 days, we'll refund or fix it free.",
+    "popular": "Most Popular",
+    "tiers": {
+      "starter": {
+        "name": "Starter",
+        "tagline": "For your first automation",
+        "delivery": "Within 12 hours",
+        "features": [
+          "Greeting + brand voice",
+          "Up to 4 qualification questions",
+          "Up to 10 FAQs",
+          "Basic AI answers",
+          "Lead capture + WhatsApp alert to owner",
+          "1 automatic follow-up",
+          "Human takeover",
+          "Multi-language support",
+          "7 days support"
+        ]
+      },
+      "pro": {
+        "name": "Pro",
+        "tagline": "Best for growing businesses",
+        "delivery": "Within 8 hours",
+        "features": [
+          "Everything in Starter",
+          "Up to 7 qualification questions",
+          "Up to 25 FAQs",
+          "Full AI answers + better persona",
+          "Up to 3 automatic follow-ups",
+          "Fully customized industry config",
+          "15 days support"
+        ]
+      },
+      "premium": {
+        "name": "Premium",
+        "tagline": "Maximum power & support",
+        "delivery": "Within 4–6 hours",
+        "features": [
+          "Everything in Pro",
+          "Unlimited questions + FAQs",
+          "Custom system prompt",
+          "Up to 5 follow-ups + multi-day nurture",
+          "Voice note support",
+          "Priority setup + personal onboarding",
+          "30 days support + 1 free revision"
+        ]
+      }
+    }
+  },
+  "comparison": {
+    "eyebrow": "Why Akra",
+    "title": "One-time fee vs. monthly tools",
+    "subtitle": "Most chatbot platforms charge you every month, forever. We build it once, on your own number.",
+    "akra": "Akra AI",
+    "official": "Official / SaaS tools",
+    "rows": [
+      { "label": "Pricing model", "akra": "One-time setup fee", "official": "Recurring monthly subscription" },
+      { "label": "Monthly cost after setup", "akra": "No monthly fees", "official": "You keep paying every month" },
+      { "label": "Time to go live", "akra": "Same day (4–12 hours)", "official": "Days to weeks + approval" },
+      { "label": "WhatsApp Business API approval", "akra": "Not required", "official": "Required" },
+      { "label": "Runs on your existing number", "akra": "Yes", "official": "Often a new number" },
+      { "label": "Lead qualification & follow-ups", "akra": "Built in", "official": "Extra cost or limited" },
+      { "label": "You own your setup", "akra": "Yes — it's yours", "official": "Vendor lock-in" },
+      { "label": "Instant WhatsApp alert to you", "akra": "Included", "official": "Email / dashboard only" }
+    ]
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Questions people ask",
+    "items": [
+      { "q": "Is this the official WhatsApp Business API?", "a": "No. We connect to your own WhatsApp as a linked device — no Meta Business API approval and no per-message fees. It behaves like you, replying from your own number." },
+      { "q": "Is there a risk of my number getting banned?", "a": "We build to WhatsApp's rules: replies only (never cold spam), human-like pacing, rate limits and instant opt-out. Used as a responder rather than a bulk sender, the risk stays low." },
+      { "q": "Do I need a new WhatsApp number?", "a": "No. We set it up on a number you already use, or a fresh one if you prefer to keep it separate." },
+      { "q": "How fast is delivery?", "a": "Starter within 12 hours, Pro within 8 hours, Premium within 4–6 hours — after we have your business details." },
+      { "q": "Which languages does it support?", "a": "Any language your customers write in, including English, Hindi, Arabic, Spanish, Portuguese and Hinglish." },
+      { "q": "Is there any monthly fee?", "a": "No. You pay once for the setup. There are no subscriptions and no per-message charges." },
+      { "q": "What if it doesn't work for my business?", "a": "If it doesn't capture real leads in the first 7 days, we'll refund or fix it free. We guarantee a working system." },
+      { "q": "Do you support my industry?", "a": "Yes. It's fully config-driven — clinics, real-estate, salons, gyms, tuition, agencies, e-commerce and more." }
+    ]
+  },
+  "finalCta": {
+    "title": "Ready to stop losing leads?",
+    "body": "Message us now — we'll show you a live demo on WhatsApp and set up your assistant the same day.",
+    "cta": "Talk to Live Demo on WhatsApp"
+  },
+  "footer": {
+    "tagline": "AI WhatsApp assistants that close the gap between a message and a sale.",
+    "rights": "All rights reserved.",
+    "changeCountry": "Change country / language",
+    "contact": "Contact",
+    "whatsapp": "WhatsApp"
+  },
+  "countryModal": {
+    "title": "Where are you based?",
+    "subtitle": "We'll show prices in your local currency and switch the language.",
+    "detected": "Detected for you",
+    "continue": "Continue",
+    "chooseLanguage": "Choose language"
+  },
+  "demo": {
+    "title": "Interactive demo",
+    "subtitle": "Try it live — pick an industry and chat. Watch the lead fill in real time, exactly like our assistant does.",
+    "leadPanel": "Lead extraction (live)",
+    "leadPanelNote": "This is what the assistant captures for you.",
+    "businessLabel": "Business",
+    "waiting": "— waiting —",
+    "online": "online · replies instantly",
+    "reset": "Reset chat",
+    "inputPlaceholder": "Type a message (or a number 1–5)…",
+    "donePlaceholder": "Conversation complete",
+    "send": "Send",
+    "status": "status",
+    "qualified": "QUALIFIED",
+    "inProgress": "in progress"
+  },
+  "offer": {
+    "eyebrow": "Akra AI Automations",
+    "title": "Stop losing customers who message you after hours.",
+    "subtitle": "A custom AI assistant on your own WhatsApp number that replies instantly, qualifies leads, answers questions, and alerts you — delivered in under a day.",
+    "servicesTitle": "What we build",
+    "services": [
+      { "title": "WhatsApp AI Lead Qualifier", "body": "Answers every enquiry instantly, asks your qualifying questions, and saves each lead with an instant alert.", "tag": "Most popular" },
+      { "title": "Appointment Booking + Reminders", "body": "Lets customers book slots in chat and sends automatic reminders to cut no-shows.", "tag": "" },
+      { "title": "AI Content Engine", "body": "Turns one business description into 7–14 days of posts, captions and hashtags.", "tag": "" },
+      { "title": "Internal Tools", "body": "Fee reminders, order bots, inventory alerts — small bots that save hours every week.", "tag": "" }
+    ]
+  }
+}
