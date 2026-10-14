@@ -1,7 +1,11 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { DEMO_PRESETS, type DemoPreset } from '../../lib/presets';
+import { resolveDemoSet, type DemoPreset } from '../../lib/demo-presets';
+import { useApp } from '../../components/AppProvider';
+import { cn } from '../../lib/cn';
+import { Eyebrow } from '../../components/ui';
+import { CheckIcon } from '../../components/icons';
 
 interface Msg {
   role: 'bot' | 'user';
@@ -17,14 +21,25 @@ function questionFor(preset: DemoPreset, index: number): string {
   return text;
 }
 
+function initMsgs(preset: DemoPreset): Msg[] {
+  return [
+    { role: 'bot', text: preset.greeting },
+    { role: 'bot', text: preset.intro },
+    { role: 'bot', text: questionFor(preset, 0) },
+  ];
+}
+
 export default function DemoPage() {
-  const [presetId, setPresetId] = useState(DEMO_PRESETS[0]!.id);
+  const { t, country, locale } = useApp();
+  const set = useMemo(() => resolveDemoSet(country.code, locale), [country.code, locale]);
+
+  const [presetId, setPresetId] = useState(set.presets[0]!.id);
   const preset = useMemo(
-    () => DEMO_PRESETS.find((p) => p.id === presetId) ?? DEMO_PRESETS[0]!,
-    [presetId]
+    () => set.presets.find((p) => p.id === presetId) ?? set.presets[0]!,
+    [set, presetId]
   );
 
-  const [msgs, setMsgs] = useState<Msg[]>([]);
+  const [msgs, setMsgs] = useState<Msg[]>(() => initMsgs(preset));
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [done, setDone] = useState(false);
@@ -32,7 +47,7 @@ export default function DemoPage() {
   const scroller = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setMsgs([{ role: 'bot', text: preset.greeting }, { role: 'bot', text: preset.intro }, { role: 'bot', text: questionFor(preset, 0) }]);
+    setMsgs(initMsgs(preset));
     setStep(0);
     setAnswers({});
     setDone(false);
@@ -69,54 +84,69 @@ export default function DemoPage() {
     if (nextStep >= preset.fields.length) setDone(true);
   }
 
+  function reset() {
+    setMsgs(initMsgs(preset));
+    setStep(0);
+    setAnswers({});
+    setDone(false);
+    setInput('');
+  }
+
   const filled = preset.fields.filter((f) => answers[f.key]);
 
   return (
-    <main className="mx-auto max-w-6xl px-6 py-8">
-      <h1 className="text-2xl font-bold">Interactive Demo</h1>
-      <p className="mt-1 text-slate-600">
-        Try it live — pick an industry and chat. The lead panel fills in real time, exactly like our
-        assistant does.
-      </p>
+    <main className="mx-auto max-w-6xl px-6 py-14 lg:px-8 lg:py-20">
+      <div className="max-w-2xl">
+        <Eyebrow>{t.demoSection.eyebrow}</Eyebrow>
+        <h1 className="mt-4 text-balance text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
+          {t.demo.title}
+        </h1>
+        <p className="mt-4 text-pretty text-base leading-relaxed text-zinc-500 lg:text-lg">
+          {t.demo.subtitle}
+        </p>
+      </div>
 
-      <div className="mt-5 flex flex-wrap gap-2">
-        {DEMO_PRESETS.map((p) => (
+      <div className="mt-8 flex flex-wrap gap-2">
+        {set.presets.map((p) => (
           <button
             key={p.id}
             onClick={() => setPresetId(p.id)}
-            className={`rounded-full border px-4 py-1.5 text-sm font-medium transition ${
-              p.id === presetId
-                ? 'border-brand bg-brand text-white'
-                : 'border-slate-300 bg-white text-slate-700 hover:border-brand'
-            }`}
+            className={cn(
+              'inline-flex items-center gap-1.5 rounded-lg border px-3.5 py-2 text-sm font-medium transition-colors',
+              p.id === preset.id
+                ? 'border-ink bg-ink text-white'
+                : 'border-zinc-200 bg-white text-zinc-600 hover:border-zinc-300 hover:text-ink'
+            )}
           >
-            {p.emoji} {p.label}
+            <span aria-hidden>{p.emoji}</span>
+            {p.label}
           </button>
         ))}
       </div>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_320px]">
+      <div className="mt-8 grid gap-6 lg:grid-cols-[1fr_320px]">
         {/* Chat window */}
-        <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-          <div className="flex items-center gap-3 border-b border-slate-100 bg-[#075e54] px-4 py-3 text-white">
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white/20">
-              {preset.emoji}
+        <section className="overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-xs">
+          <div className="flex items-center gap-3 bg-[#075e54] px-4 py-3 text-white">
+            <div className="grid h-9 w-9 place-items-center rounded-full bg-white/15 text-base">
+              <span aria-hidden>{preset.emoji}</span>
             </div>
             <div>
               <div className="text-sm font-semibold">{preset.business}</div>
-              <div className="text-xs text-white/70">online • replies instantly</div>
+              <div className="font-mono text-[11px] uppercase tracking-widest text-white/60">
+                {t.demo.online}
+              </div>
             </div>
           </div>
 
           <div ref={scroller} className="h-[420px] space-y-2 overflow-y-auto bg-[#ece5dd] p-4">
             {msgs.map((m, i) => (
-              <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+              <div key={i} className={cn('flex', m.role === 'user' ? 'justify-end' : 'justify-start')}>
                 <div
-                  className={`max-w-[80%] whitespace-pre-wrap rounded-2xl px-3 py-2 text-sm shadow-sm ${
-                    m.role === 'user'
-                      ? 'rounded-br-sm bg-[#dcf8c6] text-slate-800'
-                      : 'rounded-bl-sm bg-white text-slate-800'
-                  }`}
+                  className={cn(
+                    'max-w-[80%] whitespace-pre-wrap rounded-2xl px-3 py-2 text-sm text-zinc-800 shadow-sm',
+                    m.role === 'user' ? 'rounded-br-sm bg-[#dcf8c6]' : 'rounded-bl-sm bg-white'
+                  )}
                 >
                   {m.text}
                 </div>
@@ -124,72 +154,71 @@ export default function DemoPage() {
             ))}
           </div>
 
-          <div className="flex items-center gap-2 border-t border-slate-100 p-3">
+          <div className="flex items-center gap-2 border-t border-zinc-200 p-3">
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && send()}
               disabled={done}
-              placeholder={done ? 'Conversation complete' : 'Type a message (or a number 1-5)…'}
-              className="flex-1 rounded-full border border-slate-300 px-4 py-2 text-sm outline-none focus:border-brand disabled:bg-slate-50"
+              placeholder={done ? t.demo.donePlaceholder : t.demo.inputPlaceholder}
+              className="h-11 flex-1 rounded-lg border border-zinc-200 bg-white px-4 text-sm outline-none transition-colors focus:border-ink disabled:bg-zinc-50"
             />
             <button
               onClick={send}
               disabled={done}
-              className="rounded-full bg-brand px-5 py-2 text-sm font-medium text-white hover:bg-brand-dark disabled:opacity-50"
+              className="h-11 rounded-lg bg-wa px-5 text-sm font-semibold text-white transition-colors hover:bg-wa-deep disabled:opacity-40"
             >
-              Send
+              {t.demo.send}
             </button>
           </div>
         </section>
 
         {/* Lead extraction panel */}
-        <aside className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <h2 className="font-semibold">Lead extraction (live)</h2>
-          <p className="mt-1 text-xs text-slate-500">
-            This is what the assistant captures for you.
-          </p>
+        <aside className="rounded-xl border border-zinc-200 bg-white p-5 shadow-xs">
+          <h2 className="text-sm font-semibold tracking-tight text-ink">{t.demo.leadPanel}</h2>
+          <p className="mt-1 text-xs text-zinc-500">{t.demo.leadPanelNote}</p>
 
-          <div className="mt-4 space-y-3">
+          <div className="mt-5 space-y-3.5 border-t border-zinc-200 pt-5">
             <div>
-              <div className="text-xs uppercase tracking-wide text-slate-400">Business</div>
-              <div className="text-sm font-medium">{preset.business}</div>
+              <div className="font-mono text-[11px] uppercase tracking-widest text-zinc-400">
+                {t.demo.businessLabel}
+              </div>
+              <div className="mt-0.5 text-sm font-medium text-ink">{preset.business}</div>
             </div>
             {preset.fields.map((f) => (
               <div key={f.key}>
-                <div className="text-xs uppercase tracking-wide text-slate-400">{f.key}</div>
+                <div className="font-mono text-[11px] uppercase tracking-widest text-zinc-400">
+                  {f.label}
+                </div>
                 {answers[f.key] ? (
-                  <div className="text-sm font-medium text-slate-800">{answers[f.key]}</div>
+                  <div className="mt-0.5 text-sm font-medium text-ink">{answers[f.key]}</div>
                 ) : (
-                  <div className="text-sm text-slate-300">— waiting —</div>
+                  <div className="mt-0.5 text-sm text-zinc-300">{t.demo.waiting}</div>
                 )}
               </div>
             ))}
             <div>
-              <div className="text-xs uppercase tracking-wide text-slate-400">status</div>
+              <div className="font-mono text-[11px] uppercase tracking-widest text-zinc-400">
+                {t.demo.status}
+              </div>
               {done ? (
-                <span className="rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700">
-                  QUALIFIED
+                <span className="mt-1 inline-flex items-center gap-1 rounded-md bg-success/10 px-2.5 py-0.5 font-mono text-[11px] uppercase tracking-widest text-success">
+                  <CheckIcon className="h-3 w-3" />
+                  {t.demo.qualified}
                 </span>
               ) : (
-                <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-500">
-                  in progress ({filled.length}/{preset.fields.length})
+                <span className="mt-1 inline-flex items-center rounded-md bg-zinc-100 px-2.5 py-0.5 font-mono text-[11px] uppercase tracking-widest text-zinc-500">
+                  {t.demo.inProgress} ({filled.length}/{preset.fields.length})
                 </span>
               )}
             </div>
           </div>
 
           <button
-            onClick={() => {
-              setMsgs([{ role: 'bot', text: preset.greeting }, { role: 'bot', text: preset.intro }, { role: 'bot', text: questionFor(preset, 0) }]);
-              setStep(0);
-              setAnswers({});
-              setDone(false);
-              setInput('');
-            }}
-            className="mt-5 w-full rounded-lg border border-slate-300 py-2 text-sm font-medium text-slate-700 hover:border-brand hover:text-brand"
+            onClick={reset}
+            className="mt-6 h-10 w-full rounded-lg border border-zinc-200 text-sm font-medium text-zinc-700 transition-colors hover:border-zinc-300 hover:text-ink"
           >
-            Reset chat
+            {t.demo.reset}
           </button>
         </aside>
       </div>

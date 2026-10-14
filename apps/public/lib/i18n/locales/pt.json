@@ -1,0 +1,184 @@
+{
+  "meta": {
+    "title": "Akra AI — Assistente de vendas com IA no WhatsApp | Pague uma vez, sem mensalidade",
+    "description": "Assistente de IA no WhatsApp que recebe, qualifica e responde clientes 24/7, e avisa você na hora pelo WhatsApp. Configuração única, sem assinaturas, entregue no mesmo dia. Funciona no mundo todo."
+  },
+  "common": {
+    "whatsappCta": "Falar no WhatsApp com a demo ao vivo",
+    "whatsappShort": "Fale no WhatsApp",
+    "changeCountry": "Mudar país / idioma",
+    "mostPopular": "Mais popular",
+    "oneTime": "configuração única",
+    "delivery": "Entrega",
+    "payOnce": "Pague uma vez. Sem mensalidade. Nunca.",
+    "language": "Idioma",
+    "country": "País"
+  },
+  "nav": {
+    "home": "Início",
+    "services": "Serviços",
+    "demo": "Demo ao vivo",
+    "pricing": "Preços",
+    "faq": "Dúvidas"
+  },
+  "hero": {
+    "badge": "Assistente de vendas com IA no WhatsApp",
+    "headline": "Seu assistente de vendas com IA no WhatsApp",
+    "headline2": "Pague uma vez. Sem mensalidade. Entregue no mesmo dia. Funciona no mundo todo.",
+    "sub": "Recebe os clientes, qualifica leads, responde perguntas e avisa você na hora pelo WhatsApp. Configuração única. Sem assinaturas.",
+    "ctaSecondary": "Testar a demo ao vivo",
+    "trust": "Sem mensalidade · Entrega no mesmo dia · Funciona no seu próprio número"
+  },
+  "social": {
+    "text": "Usado por clínicas, coaches, imobiliárias, salões, agências e negócios online no mundo todo"
+  },
+  "how": {
+    "title": "Como funciona",
+    "subtitle": "De uma conversa de 10 minutos a um assistente funcionando no mesmo dia.",
+    "steps": [
+      { "title": "Conte sobre o seu negócio", "body": "Uma conversa rápida de 10 minutos: o que você vende, o que os clientes perguntam e como identificar um bom lead." },
+      { "title": "Montamos seu assistente", "body": "Configuramos o assistente de IA no seu próprio número de WhatsApp: saudação, perguntas de qualificação, FAQs e alertas." },
+      { "title": "Teste ao vivo com a gente", "body": "Você conversa com ele antes de entrar no ar. Ajustamos o tom, as respostas e os follow-ups até parecer você." },
+      { "title": "No ar e com leads", "body": "Cada contato é qualificado, registrado e enviado a você na hora pelo WhatsApp. Você só fecha." }
+    ]
+  },
+  "demoSection": {
+    "eyebrow": "Demo ao vivo",
+    "title": "Teste o assistente você mesmo",
+    "subtitle": "Escolha um setor e converse com um assistente de verdade — veja ele qualificar o lead em tempo real.",
+    "cta": "Abrir a demo interativa"
+  },
+  "pricing": {
+    "eyebrow": "Preços",
+    "title": "Preço simples, pagamento único",
+    "subtitle": "Escolha o pacote ideal. Um pagamento, sem assinaturas, e um sistema que funciona — ou consertamos de graça.",
+    "cta": "Falar no WhatsApp com a demo ao vivo",
+    "faqNote": "Preços exibidos em {{currency}}. O orçamento final é confirmado no WhatsApp.",
+    "guarantee": "Se não captar leads reais nos primeiros 7 dias, devolvemos o dinheiro ou consertamos de graça.",
+    "popular": "Mais popular",
+    "tiers": {
+      "starter": {
+        "name": "Starter",
+        "tagline": "Para sua primeira automação",
+        "delivery": "Em 12 horas",
+        "features": [
+          "Saudação + voz da marca",
+          "Até 4 perguntas de qualificação",
+          "Até 10 FAQs",
+          "Respostas de IA básicas",
+          "Captura de leads + alerta por WhatsApp ao dono",
+          "1 follow-up automático",
+          "Atendimento humano quando quiser",
+          "Suporte a vários idiomas",
+          "7 dias de suporte"
+        ]
+      },
+      "pro": {
+        "name": "Pro",
+        "tagline": "Ideal para negócios em crescimento",
+        "delivery": "Em 8 horas",
+        "features": [
+          "Tudo do Starter",
+          "Até 7 perguntas de qualificação",
+          "Até 25 FAQs",
+          "Respostas de IA completas + persona melhor",
+          "Até 3 follow-ups automáticos",
+          "Configuração de setor totalmente personalizada",
+          "15 dias de suporte"
+        ]
+      },
+      "premium": {
+        "name": "Premium",
+        "tagline": "Potência e suporte máximos",
+        "delivery": "Em 4–6 horas",
+        "features": [
+          "Tudo do Pro",
+          "Perguntas e FAQs ilimitadas",
+          "Prompt de sistema personalizado",
+          "Até 5 follow-ups + nutrição em vários dias",
+          "Suporte a mensagens de voz",
+          "Configuração prioritária + onboarding pessoal",
+          "30 dias de suporte + 1 revisão grátis"
+        ]
+      }
+    }
+  },
+  "comparison": {
+    "eyebrow": "Por que Akra",
+    "title": "Pagamento único vs. ferramentas mensais",
+    "subtitle": "A maioria das plataformas de chatbot cobra todo mês, para sempre. Nós montamos uma vez, no seu número.",
+    "akra": "Akra AI",
+    "official": "Ferramentas oficiais / SaaS",
+    "rows": [
+      { "label": "Modelo de preço", "akra": "Taxa única de configuração", "official": "Assinatura mensal recorrente" },
+      { "label": "Custo mensal após a configuração", "akra": "Sem mensalidade", "official": "Você continua pagando todo mês" },
+      { "label": "Tempo para entrar no ar", "akra": "No mesmo dia (4–12 horas)", "official": "Dias a semanas + aprovação" },
+      { "label": "Aprovação da WhatsApp Business API", "akra": "Não é necessária", "official": "Necessária" },
+      { "label": "Roda no seu número atual", "akra": "Sim", "official": "Muitas vezes um número novo" },
+      { "label": "Qualificação de leads e follow-ups", "akra": "Incluído", "official": "Custo extra ou limitado" },
+      { "label": "A configuração é sua", "akra": "Sim — é sua", "official": "Preso ao fornecedor" },
+      { "label": "Alerta instantâneo no WhatsApp", "akra": "Incluído", "official": "Só e-mail ou painel" }
+    ]
+  },
+  "faq": {
+    "eyebrow": "Dúvidas",
+    "title": "Perguntas que as pessoas fazem",
+    "items": [
+      { "q": "É a API oficial do WhatsApp Business?", "a": "Não. Conectamos ao seu próprio WhatsApp como dispositivo vinculado — sem aprovação do Meta Business API e sem taxa por mensagem. Ele age como você, respondendo do seu próprio número." },
+      { "q": "Há risco de bloquearem meu número?", "a": "Construímos conforme as regras do WhatsApp: apenas respostas (nunca spam em massa), ritmo humano, limites de envio e descadastro imediato. Usado como respondedor e não como remetente em massa, o risco é baixo." },
+      { "q": "Preciso de um número novo de WhatsApp?", "a": "Não. Configuramos em um número que você já usa, ou em um novo se preferir manter separado." },
+      { "q": "Qual a velocidade de entrega?", "a": "Starter em 12 horas, Pro em 8 horas, Premium em 4–6 horas — depois de recebermos os dados do seu negócio." },
+      { "q": "Quais idiomas são suportados?", "a": "Qualquer idioma que seus clientes escreverem, incluindo inglês, hindi, árabe, espanhol, português e hinglish." },
+      { "q": "Existe alguma mensalidade?", "a": "Não. Você paga uma vez pela configuração. Não há assinaturas nem cobrança por mensagem." },
+      { "q": "E se não funcionar para o meu negócio?", "a": "Se não captar leads reais nos primeiros 7 dias, devolvemos o dinheiro ou consertamos de graça. Garantimos um sistema que funciona." },
+      { "q": "Vocês atendem o meu setor?", "a": "Sim. É totalmente orientado por configuração — clínicas, imobiliárias, salões, academias, cursos, agências, e-commerce e mais." }
+    ]
+  },
+  "finalCta": {
+    "title": "Pronto para parar de perder leads?",
+    "body": "Fale com a gente agora — mostramos uma demo ao vivo no WhatsApp e configuramos seu assistente no mesmo dia.",
+    "cta": "Falar no WhatsApp com a demo ao vivo"
+  },
+  "footer": {
+    "tagline": "Assistentes de IA no WhatsApp que encurtam a distância entre uma mensagem e uma venda.",
+    "rights": "Todos os direitos reservados.",
+    "changeCountry": "Mudar país / idioma",
+    "contact": "Contato",
+    "whatsapp": "WhatsApp"
+  },
+  "countryModal": {
+    "title": "De onde você é?",
+    "subtitle": "Vamos mostrar os preços na sua moeda local e trocar o idioma.",
+    "detected": "Detectado para você",
+    "continue": "Continuar",
+    "chooseLanguage": "Escolher idioma"
+  },
+  "demo": {
+    "title": "Demo interativa",
+    "subtitle": "Teste ao vivo — escolha um setor e converse. Veja o lead sendo preenchido em tempo real, igual ao nosso assistente.",
+    "leadPanel": "Extração de leads (ao vivo)",
+    "leadPanelNote": "Isto é o que o assistente captura para você.",
+    "businessLabel": "Negócio",
+    "waiting": "— aguardando —",
+    "online": "online · responde na hora",
+    "reset": "Reiniciar conversa",
+    "inputPlaceholder": "Digite uma mensagem (ou um número 1–5)…",
+    "donePlaceholder": "Conversa concluída",
+    "send": "Enviar",
+    "status": "status",
+    "qualified": "QUALIFICADO",
+    "inProgress": "em andamento"
+  },
+  "offer": {
+    "eyebrow": "Akra AI Automations",
+    "title": "Pare de perder clientes que mandam mensagem fora do horário.",
+    "subtitle": "Um assistente de IA personalizado no seu próprio número de WhatsApp que responde na hora, qualifica leads, responde perguntas e avisa você — entregue em menos de um dia.",
+    "servicesTitle": "O que construímos",
+    "services": [
+      { "title": "Qualificador de leads com IA no WhatsApp", "body": "Responde cada contato na hora, faz suas perguntas de qualificação e salva cada lead com um alerta imediato.", "tag": "Mais popular" },
+      { "title": "Agendamento + Lembretes", "body": "Permite que clientes agendem no chat e envia lembretes automáticos para reduzir faltas.", "tag": "" },
+      { "title": "Motor de conteúdo com IA", "body": "Transforma a descrição de um negócio em 7–14 dias de posts, legendas e hashtags.", "tag": "" },
+      { "title": "Ferramentas internas", "body": "Lembretes de cobrança, bots de pedidos, alertas de estoque — pequenos bots que economizam horas toda semana.", "tag": "" }
+    ]
+  }
+}
