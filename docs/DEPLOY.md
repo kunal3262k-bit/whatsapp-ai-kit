@@ -1,24 +1,37 @@
 # Deploy (all free tiers)
 
-Two things to deploy: the **bot** (needs an always-on process) and the **dashboard** (static-ish, Vercel).
+Three things to deploy: the **bot** (needs an always-on process), the **public site**
+(static, Vercel, secret-free), and the **admin app** (gated, Vercel, service-role server-side).
 
 ---
 
-## 1. Dashboard → Vercel (free, 2 minutes)
+## 1. Web apps → Vercel (free) — two projects, one repo
 
-1. Push this repo to GitHub (see the root README / checklist).
-2. Go to https://vercel.com/new → import the repo.
-3. Set **Root Directory** to `apps/dashboard`.
-4. Framework preset: **Next.js** (auto-detected). Build command default is fine.
-5. Add Environment Variables:
-   - `NEXT_PUBLIC_SUPABASE_URL`
-   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-6. Deploy. You get a URL like `https://your-kit.vercel.app` with:
-   - `/` → leads dashboard
-   - `/offer` → public offer page to send clients
-   - `/pay` → UPI payment page
+This repo ships **two** Next.js apps. Keep them as **two separate Vercel projects**; the
+split is a security boundary (the public site must never carry a Supabase key).
 
-> If you don't set Supabase env vars yet, the dashboard still deploys and shows a setup hint.
+### 1a. Public site (root `apps/public`)
+1. Vercel → **New Project** → import the repo.
+2. **Root Directory** = `apps/public`, framework preset **Next.js**.
+3. Env: `NEXT_PUBLIC_SITE_URL` = the deployed origin (e.g. `https://your-kit.vercel.app`).
+   Do **not** add any Supabase key here.
+4. Deploy. Serves the landing page and `/offer`.
+
+### 1b. Admin app (root `apps/admin`)
+1. Vercel → **New Project** → import the same repo. Give it a name that does not resemble
+   the public site (it is guessable by anyone who knows the public URL).
+2. **Root Directory** = `apps/admin`, framework preset **Next.js**.
+3. Env (Production) — server-side only:
+   - `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`
+   - `ADMIN_KEY` (`openssl rand -hex 24`), `ADMIN_SESSION_SECRET` (`openssl rand -hex 32`)
+   - `NEXT_PUBLIC_UPI_ID`, `NEXT_PUBLIC_UPI_NAME`
+   - `NEXT_PUBLIC_VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT` (optional; push)
+4. Deploy, then **unlock once** by opening `https://<admin-host>/enter?key=<ADMIN_KEY>`.
+   That sets an `HttpOnly` HMAC cookie and redirects to `/`. Until then, every path and
+   method returns a byte-identical 404 — including `/enter` itself without the right key.
+
+> Fail-closed: if `ADMIN_KEY` or `ADMIN_SESSION_SECRET` is unset, the whole admin 404s.
+> Regain access any time with the `/enter?key=…` URL; rotate by changing `ADMIN_KEY` and redeploying.
 
 ---
 
@@ -26,16 +39,16 @@ Two things to deploy: the **bot** (needs an always-on process) and the **dashboa
 
 1. Create a project at https://supabase.com (free).
 2. Open **SQL Editor**, paste `apps/bot/supabase/schema.sql`, click **Run**.
-3. **Project Settings → API**: copy the **Project URL**, **anon key** (dashboard), and
-   **service_role key** (bot only — never expose this in the browser).
+3. **Project Settings → API**: copy the **Project URL** and the **service_role key**
+   (used by the bot and the admin app — server-side only; never expose it in the browser).
 4. Put them in `.env`:
    ```
    STORAGE=supabase
    SUPABASE_URL=...
    SUPABASE_SERVICE_ROLE_KEY=...
-   NEXT_PUBLIC_SUPABASE_URL=...
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=...
    ```
+   The same two values go on the **admin** Vercel project (Production). No Supabase key
+   belongs on the public site or in any `NEXT_PUBLIC_` variable.
 
 > Prefer zero setup? Leave `STORAGE=local` and the bot uses a JSON file on disk.
 
@@ -78,13 +91,13 @@ cost, always on when they're open. Give them a one-page "how to start the bot" n
 
 1. Use a spare SIM (not your main number) for testing.
 2. `npm run dev:bot` → scan the QR from that phone.
-3. Send a message from another phone to that number → watch the flow, then check the dashboard / Sheet.
+3. Send a message from another phone to that number → watch the flow, then check the admin app / Sheet.
 
 ---
 
 ## Recommended minimum viable delivery
 
 - Bot: client's PC or one Oracle free VM.
-- Storage: Supabase free (so the dashboard works anywhere).
-- Dashboard + offer page: Vercel free.
+- Storage: Supabase free (so the apps work anywhere).
+- Public site + admin app: Vercel free (two projects).
 Total monthly cost: **₹0**.

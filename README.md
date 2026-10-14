@@ -14,7 +14,8 @@ and hand over a working system the same day.
 | App | What it does |
 |---|---|
 | `apps/bot` | The WhatsApp AI agent: greeting → qualification questions → auto reply → push lead → reminders. |
-| `apps/dashboard` | Admin page (see leads + conversations) **and** a public `/offer` landing page. |
+| `apps/public` | Public marketing site (landing, `/offer`). Static, holds **no** Supabase key or secret. |
+| `apps/admin` | Gated admin cockpit (leads CRM, outreach, contract, pay, push, bot status). Server-side only. |
 | `config/*.json` | One file per client: business info, personality, questions, guardrails. |
 | `docs/` | Deploy, onboarding, demo script, Apps Script sheet sink, tracker template. |
 | `tools/outreach` | Generates personalized first messages from a CSV of businesses. |
@@ -35,11 +36,15 @@ whatsapp-ai-kit/
 │   │   │   ├── lib/ratelimit.ts # anti-spam pacing
 │   │   │   └── store/           # local JSON or Supabase
 │   │   └── supabase/schema.sql
-│   └── dashboard/               # Next.js (App Router + Tailwind)
-│       ├── app/page.tsx         # leads dashboard
-│       ├── app/offer/page.tsx   # public one-page offer/demo site
-│       ├── app/pay/page.tsx     # UPI payment page
-│       └── app/api/leads/route.ts
+│   ├── public/                  # Next.js marketing site (no secrets)
+│   │   ├── app/page.tsx         # landing page
+│   │   └── app/offer/page.tsx   # one-page offer/demo site
+│   └── admin/                   # Next.js admin cockpit (gated, server-side only)
+│       ├── middleware.ts        # secret-path gate (byte-identical 404 when locked)
+│       ├── app/enter/route.ts   # /enter?key=<ADMIN_KEY> sets the session cookie
+│       ├── app/page.tsx         # leads CRM
+│       ├── app/{outreach,contract,pay,push,status}/page.tsx
+│       └── app/api/{leads,bot-status,push/subscribe,push/send}/route.ts
 ├── config/
 │   ├── client.example.json
 │   └── salon.example.json
@@ -68,7 +73,8 @@ npm run dev:bot             # builds + starts the bot; scan the QR with WhatsApp
 Then in another terminal:
 
 ```bash
-npm run dev:dashboard       # http://localhost:3000  (admin + /offer + /pay)
+npm run dev:public          # http://localhost:3000  (marketing site)
+npm run dev:admin           # http://localhost:3000  (gated admin — set ADMIN_KEY first)
 ```
 
 ### 0. Ship to GitHub (before deploying)
@@ -144,7 +150,32 @@ then paste its Web App URL into `.env` as `GOOGLE_SHEET_WEBHOOK_URL`.
 |---|---|
 | `node scripts/setup.mjs` | First-run setup |
 | `npm run dev:bot` | Build + run the WhatsApp bot |
-| `npm run dev:dashboard` | Run the Next.js dashboard |
-| `npm run build` | Build both apps |
-| `npm run typecheck` | Type-check both apps |
-| `npm run start:bot` / `start:dashboard` | Run built output |
+| `npm run dev:public` | Run the public marketing site |
+| `npm run dev:admin` | Run the gated admin app (needs `ADMIN_KEY` + `ADMIN_SESSION_SECRET`) |
+| `npm run build` | Build all workspaces (bot, public, admin) |
+| `npm run typecheck` | Type-check all workspaces |
+| `npm run start:bot` / `start:public` / `start:admin` | Run built output |
+
+---
+
+## Deploy — two Vercel projects from one repo
+
+The split is a security boundary: the public site is static and secret-free, the admin
+holds the Supabase service-role key and is gated.
+
+| Project | Root Directory | Env (Production) |
+|---|---|---|
+| public site | `apps/public` | `NEXT_PUBLIC_SITE_URL` only — **no** Supabase key |
+| admin (name it something unguessable) | `apps/admin` | `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `ADMIN_KEY`, `ADMIN_SESSION_SECRET`, `NEXT_PUBLIC_UPI_ID`, `NEXT_PUBLIC_UPI_NAME`, `NEXT_PUBLIC_VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT` |
+
+**Entering the admin:** open it once with the secret key in the URL —
+`https://<admin-host>/enter?key=<ADMIN_KEY>`. That sets an `HttpOnly` HMAC-signed cookie
+and redirects to `/`. Without a valid key, `/enter` itself returns a **byte-identical 404**,
+and every other path/method returns the same 404 — the app is invisible until unlocked.
+
+- Generate the secrets with `openssl rand -hex 24` (`ADMIN_KEY`) and `openssl rand -hex 32`
+  (`ADMIN_SESSION_SECRET`). Keep them in your password manager; never commit them.
+- The VAPID **private** key stays server-side (bot sender + `/api/push/send`); only
+  `NEXT_PUBLIC_VAPID_PUBLIC_KEY` is embedded in the browser.
+- Apply `apps/bot/supabase/schema.sql` in Supabase → SQL Editor before first use, so the
+  `push_subscriptions` table and `leads.status` column exist.

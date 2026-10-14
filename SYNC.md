@@ -13,7 +13,8 @@
 |---|---|---|
 | `apps/bot/**` (conversation engine, Baileys, Groq, storage, reminders, rate-limit) | **OpenCode** | Frozen core — change only with explicit request. |
 | `config/**` (per-client JSON, onboarding model) | **OpenCode** | Config-driven; never fork per client. |
-| `apps/dashboard/**` (admin, `/offer`, `/pay`) | **OpenCode** | Production pages. |
+| `apps/public/**` (marketing site, `/offer`) | **OpenCode** | Static; holds no Supabase key or secret. |
+| `apps/admin/**` (gated cockpit: leads CRM, outreach, contract, pay, push, status) | **OpenCode** | Server-side service-role only; secret-path gate. |
 | New growth pages `/demo`, `/outreach`, `/contract` | **OpenCode** (absorbed from Antigravity spec) | Land here, not in a new repo. |
 | `docs/**`, `tools/**`, `scripts/**` | **OpenCode** | |
 | Experimental UI ideas / throwaway prototypes | Antigravity (reference) | Must be re-implemented cleanly here to ship. |
@@ -35,7 +36,7 @@
 ## Sync protocol (two agents, one repo)
 1. **Before starting:** `git pull --rebase` and read this `SYNC.md` + `HANDOFF` state below.
 2. **Ownership & heartbeat:** only work inside areas you own (see table). Don't touch a task claimed by the other agent unless its heartbeat is >30m stale.
-3. **Verification gate:** run the dashboard build (`npm run build -w apps/dashboard`) and bot typecheck (`npm run typecheck -w apps/bot`) before committing. Must pass.
+3. **Verification gate:** run `npm run typecheck && npm run build` (bot + public + admin) before committing. Must pass.
 4. **Atomic commit:** code + this file together, message `feat/fix: <summary> [VERIFY: PASS]`.
 5. **Push after rebase.** Never leave the handoff local-only.
 6. **Free-tier rule:** nothing added may require a paid service or the official WhatsApp Business API.
@@ -45,8 +46,8 @@
 Owner:            opencode
 Claimed task:     (none — absorption complete, released)
 Heartbeat:        2026-10-11T17:20:00+05:30
-Status:           DONE — /demo, /outreach, /pay (upgraded), /contract ported & verified
-Blocks:           none
+  Status:           public/admin split on branch `public-admin-split` — apps split, secret-path gate, admin cockpit (leads CRM, outreach, contract, pay, push, bot status). Code + docs done & verified; deploy provisioning pending.
+Blocks:           admin deploy waits on human steps (Supabase schema.sql run + anon-key rotation, admin Vercel project).
 Rebirth rule:     if heartbeat >30m stale and no running daemon, partner may claim.
 ```
 
