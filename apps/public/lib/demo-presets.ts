@@ -103,6 +103,57 @@ const IN: DemoPreset[] = [
     ],
     handoff: 'Perfect! 🙏 Aapki request note ho gayi — team aapko slot confirm karegi.',
   },
+  {
+    id: 'cafe',
+    label: 'Cafe / Takeaway',
+    emoji: '☕',
+    business: 'Bhukkad Cafe',
+    greeting: 'Namaste! Bhukkad Cafe se bol rahe hain 🙏 Order lene ke liye main yahan hoon.',
+    intro:
+      'Aaj ka menu 👇\n\n☕ Cold Coffee — ₹80\n🍵 Masala Chai — ₹30\n🥪 Veg Grilled Sandwich — ₹120\n🍔 Bhukkad Burger — ₹150\n🍟 Masala Fries — ₹90\n🍰 Chocolate Brownie — ₹100\n\nKya order karna chahoge?',
+    fields: [
+      {
+        key: 'order',
+        label: 'Order',
+        question: 'Aapka order kya hai?',
+        type: 'choice',
+        options: ['Cold Coffee ₹80', 'Veg Grilled Sandwich ₹120', 'Bhukkad Burger ₹150', 'Masala Fries ₹90', 'Chocolate Brownie ₹100'],
+      },
+      {
+        key: 'add-on',
+        label: 'Add-on',
+        question: 'Iske saath kuch aur? Combo me sasta padta hai 😋',
+        type: 'choice',
+        options: ['Combo: + Fries + Cold drink ₹150', 'Extra Cheese ₹30', 'Brownie add ₹100', 'Nahi, bas itna hi'],
+      },
+      { key: 'mode', label: 'Mode', question: 'Takeaway ya Delivery?', type: 'choice', options: ['Takeaway (aake le lunga)', 'Delivery'] },
+      { key: 'name', label: 'Name', question: 'Aapka naam (delivery ho toh address bhi likh dena)?', type: 'text' },
+    ],
+    handoff:
+      'Order confirm ho gaya! 🧾 Main kitchen ko bhej raha hoon — 15–20 min me ready. Payment UPI/cash. Aapka order record bhi save ho gaya. Shukriya 🙏',
+  },
+  {
+    id: 'legal',
+    label: 'Lawyer / Notary',
+    emoji: '⚖️',
+    business: 'Sharma Legal Associates',
+    greeting: 'Namaste! Sharma Legal Associates mein aapka swagat hai 🙏 Main aapki query note kar leta hoon.',
+    intro: 'Sahi salah ke liye bas 3 chhoti details batayein:',
+    fields: [
+      {
+        key: 'matter',
+        label: 'Matter',
+        question: 'Aapko kis kaam ke liye help chahiye?',
+        type: 'choice',
+        options: ['Property / registry', 'Rent agreement', 'Affidavit / notary', 'Will / power of attorney', 'Court / legal case', 'Other'],
+      },
+      { key: 'urgency', label: 'Urgency', question: 'Kab tak chahiye?', type: 'choice', options: ['Aaj hi', 'Iss hafte', 'Agle hafte', 'Sirf jaankari chahiye'] },
+      { key: 'mode', label: 'Mode', question: 'Kaise baat karna chahenge?', type: 'choice', options: ['Office visit', 'Phone / WhatsApp consult', 'Document bhejna hai'] },
+      { key: 'name', label: 'Name', question: 'Aapka shubh naam?', type: 'text' },
+    ],
+    handoff:
+      'Dhanyavaad! 📝 Aapki query note ho gayi. Hamari team aapko consultation slot confirm karne ke liye contact karegi.',
+  },
 ];
 
 /* ── US / UK / Global · English ───────────────────────────── */
