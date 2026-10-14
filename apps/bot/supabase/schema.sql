@@ -76,6 +76,8 @@ create table if not exists push_subscriptions (
   last_seen_at timestamptz not null default now()
 );
 alter table push_subscriptions enable row level security;
+-- Belt-and-suspenders: anon/authenticated get no table privilege on push_subscriptions either.
+revoke all on push_subscriptions from anon, authenticated;
 
 -- Bot-stuck handoff timestamp (for auto-resume).
 alter table contacts add column if not exists handoff_at timestamptz;
