@@ -8,7 +8,10 @@ export interface Biz {
 /**
  * Seed list — real, publicly-listed businesses near Delhi 110051, verified
  * earlier from public directories. ALWAYS re-verify a number before sending.
- * Import your own ICP via the CSV box on /outreach.
+ * Default ICP is now HOME SERVICES / TRADES (plumbers, electricians, AC/HVAC,
+ * cleaning, pest, painters, carpenters, appliance repair, packers) — source
+ * those via Google Maps ("plumber in Krishna Nagar", etc.) and import your own
+ * list through the CSV/XLSX box on /outreach.
  */
 export const SEED_BUSINESSES: Biz[] = [
   { name: 'Hair Studio By Zafar', category: 'salon', area: 'Krishna Nagar', phone: '9724514459' },
@@ -35,6 +38,15 @@ const OPT_OUT = 'Interest na ho toh bas "No" likh dijiye, dobara message nahi ka
 
 export function hook(category: string): string {
   const c = category.toLowerCase();
+  if (c.includes('plumb') || c.includes('नल')) return 'plumbing job calls';
+  if (c.includes('electric')) return 'electrician call-outs';
+  if (c.includes('hvac') || c.includes('ac repair') || c.includes('ac service') || c.includes('air cond') || c.includes('cooling') || c.includes('एसी')) return 'AC service calls';
+  if (c.includes('clean')) return 'cleaning enquiries';
+  if (c.includes('pest')) return 'pest-control enquiries';
+  if (c.includes('paint')) return 'painting quotes';
+  if (c.includes('carpenter') || c.includes('furniture') || c.includes('woodwork')) return 'furniture enquiries';
+  if (c.includes('appliance') || c.includes('fridge') || c.includes('washing')) return 'repair calls';
+  if (c.includes('packer') || c.includes('mover') || c.includes('shifting')) return 'shifting enquiries';
   if (c.includes('salon') || c.includes('beauty') || c.includes('parlour')) return 'salon enquiries';
   if (c.includes('sweet')) return 'festive/sweets orders';
   if (c.includes('dental')) return 'dental appointment enquiries';
@@ -60,6 +72,61 @@ export interface ProblemFix {
  */
 export function categoryProblemFix(category: string): ProblemFix {
   const c = (category ?? '').toLowerCase();
+  if (c.includes('plumb') || c.includes('नल') || c.includes('tap') || c.includes('leak'))
+    return {
+      problem: 'Customer ki call aati hai jab aap job pe ho; miss hui to woh 8 second mein doosre plumber ko call kar deta hai',
+      help: 'main ek AI assistant set karta hoon jo aapke WhatsApp par 24x7 enquiry leta hai, time confirm karta hai aur job book karke aapko turant ping deta hai',
+    };
+  if (c.includes('electric') || c.includes('wiring') || c.includes('inverter') || c.includes('बिजली'))
+    return {
+      problem: 'Inverter/fan/wiring ki emergency call bar-bar aati hai; utha nahi paate to customer agla number dial kar leta hai',
+      help: 'main ek AI assistant set karta hoon jo har enquiry ka turant jawab deta hai, problem samajhta hai aur slot book karke aapko message kar deta hai — chahe raat ke 10 baje',
+    };
+  if (c.includes('hvac') || c.includes('ac repair') || c.includes('ac service') || c.includes('air cond') || c.includes('cooling') || c.includes('एसी'))
+    return {
+      problem: 'Season mein call volume 10x ho jati hai; ek din ke missed calls = hafte bhar ka kaam chala gaya',
+      help: 'main ek AI assistant set karta hoon jo AC enquiries 24x7 receive karta hai, model + area note karke slot fix karta hai aur aapko ready list bhej deta hai',
+    };
+  if (c.includes('clean'))
+    return {
+      problem: 'Quote maangne wale 10 mein se 7 call back nahi karte; pehla jawab dene wala hi jeetta hai',
+      help: 'main ek AI assistant set karta hoon jo instant reply deta hai, property type poochta hai aur quote ke liye time slot book karta hai',
+    };
+  if (c.includes('pest') || c.includes('termite') || c.includes('cockroach') || c.includes('fumigation') || c.includes('कीट'))
+    return {
+      problem: 'Treatment ke baad follow-up bhool jaata hai; next quarterly treatment ka order kho jaata hai',
+      help: 'main ek AI assistant set karta hoon jo enquiry leta hai aur follow-up reminders bhi bhejta hai taaki booking milti rahe',
+    };
+  if (c.includes('paint') || c.includes('distemper'))
+    return {
+      problem: 'Log quote ke liye call karte hain, site visit pe confirm karte hain, phir gayab ho jaate hain',
+      help: 'main ek AI assistant set karta hoon jo har quote enquiry ka detail leke site-visit slot book karta hai aur visit se pehle confirm karta hai',
+    };
+  if (c.includes('carpenter') || c.includes('furniture') || c.includes('woodwork') || c.includes('almirah') || c.includes('cabinet') || c.includes('modular'))
+    return {
+      problem: 'Custom kaam ki enquiry aati hai par aap workshop mein busy ho aur customer intezaar nahi karta',
+      help: 'main ek AI assistant set karta hoon jo enquiry leke kaam ki detail aur budget range samajh ke aapko summary bhej deta hai',
+    };
+  if (c.includes('appliance') || c.includes('fridge') || c.includes('refrigerator') || c.includes('washing') || c.includes('microwave') || c.includes('geyser'))
+    return {
+      problem: 'Fridge/washing machine ki emergency call random time pe aati hai; miss = customer service centre ko de deta hai',
+      help: 'main ek AI assistant set karta hoon jo 24x7 call leta hai, brand + problem note karta hai aur home-visit slot book karke aapko ping deta hai',
+    };
+  if (c.includes('packer') || c.includes('mover') || c.includes('shifting') || c.includes('relocation'))
+    return {
+      problem: 'Ek missed call = ek poora ghar shifting ka order; portals se lead mehngi hai aur jawab deri se milta hai',
+      help: 'main ek AI assistant set karta hoon jo har enquiry ka shifting date, floor aur items note karta hai aur same-day quote ke liye slot fix karta hai',
+    };
+  if (c.includes('garden') || c.includes('landscap') || c.includes('lawn'))
+    return {
+      problem: 'Monthly maintenance ke customers call karte hain, aap garden mein hote ho, jawab late milta hai',
+      help: 'main ek AI assistant set karta hoon jo enquiry leke monthly maintenance slot book karta hai aur existing customers ko service reminder bhejta hai',
+    };
+  if (c.includes('locksmith') || c.includes('lock') || c.includes('ताला'))
+    return {
+      problem: 'Emergency mein customer sabse pehle jo uthaye usko bulata hai; ring ring koi jawab nahi = order gaya',
+      help: 'main ek AI assistant set karta hoon jo 24x7 uthata hai, location turant leke aapko alert kar deta hai — emergency mein ek second bhi waste nahi',
+    };
   if (c.includes('cafe') || c.includes('restaurant'))
     return {
       problem: 'WhatsApp par order lena, menu batana aur delivery coordinate karna sab manual hai',
@@ -133,7 +200,7 @@ export const PITCH_ANGLES: PitchAngle[] = [
     description: 'Focus: name the exact problem in their business and how the bot fixes it.',
     template: (b) => {
       const { problem, help } = categoryProblemFix(b.category);
-      return `Namaste ${b.name} 🙏 ${problem}. ${help} — aapke WhatsApp number par ek din mein set ho jaata hai. Kya main ek 90-second demo bhej sakta hoon? ${OPT_OUT}`;
+      return `Namaste ${b.name} 🙏 ${problem}. ${help} — aapke WhatsApp number par ek din mein set ho jaata hai. Setup ₹6,000 + ₹2,000/mahina care plan; ek bhi miss job recover ho gaya to plan paid off. Kya main 90-second demo bhej sakta hoon? ${OPT_OUT}`;
     },
   },
   {
@@ -141,47 +208,47 @@ export const PITCH_ANGLES: PitchAngle[] = [
     label: 'Missed enquiries',
     description: 'Focus: revenue leaking when you cannot reply fast enough.',
     template: (b) =>
-      `Namaste ${b.name} 🙏 Main Kunal. Aapke jaise local businesses mein bahut ${hook(
+      `Namaste ${b.name} 🙏 Main Kunal. Aapke jaise ${b.category} businesses mein bahut ${hook(
         b.category
-      )} aise messages aate hain jinka reply late hota hai — aur customer wahi dusri jagah se le leta hai. ` +
-      `Main aapke WhatsApp number par ek AI assistant set karta hoon jo turant reply karta hai aur har lead save karta hai. ` +
-      `Ek din mein set, ₹8k se shuru. Demo bhej sakta hoon? ${OPT_OUT}`,
+      )} aati hain jinka reply late hota hai — aur customer 8 second mein agla number dial kar leta hai. ` +
+      `Main aapke WhatsApp par ek AI assistant set karta hoon jo turant reply karta hai, time confirm karta hai aur har lead save karta hai. ` +
+      `Setup ₹6,000 + ₹2,000/mahina, ek din mein live. Demo bhej sakta hoon? ${OPT_OUT}`,
   },
   {
     id: 'after-hours',
     label: 'After-hours gap',
     description: 'Focus: enquiries that arrive at night / when closed.',
     template: (b) =>
-      `Namaste ${b.name} 🙏 Raat 10 baje ya jab aap busy ho, jo customer message karta hai aur reply nahi milta — ` +
-      `wo kal wapas nahi aata. Main ek AI assistant banata hoon jo aapke band hone ke baad bhi customers ko reply karta hai aur details le leta hai. ` +
-      `Aapke WhatsApp number par, ek din mein. Demo dekhna chahenge? ${OPT_OUT}`,
+      `Namaste ${b.name} 🙏 Raat 10 baje ya jab aap job pe busy ho, jo customer message/call karta hai aur reply nahi milta — ` +
+      `woh kal wapas nahi aata. Main ek AI assistant lagata hoon jo aapke band hone ke baad bhi customers ko reply karta hai aur details le leta hai. ` +
+      `Aapke WhatsApp number par, setup ₹6,000 + ₹2,000/mahina. Demo dekhna chahenge? ${OPT_OUT}`,
   },
   {
     id: 'speed',
     label: 'Speed-to-lead',
     description: 'Focus: first responder wins the customer.',
     template: (b) =>
-      `${b.name} ke liye ek chhota idea 🙏 Jo business sabse pehle reply karta hai, customer usi ke paas jaata hai. ` +
+      `${b.name} ke liye ek chhota idea 🙏 Jo business sabse pehle reply karta hai, customer usi ke paas jaata hai — 10 mein se 8 jobs wahi le jaata hai. ` +
       `Main aapke WhatsApp par ek AI assistant lagata hoon jo seconds mein reply karta hai aur poora lead capture karta hai. ` +
-      `Set up ek din mein. 90-second demo bhej doon? ${OPT_OUT}`,
+      `Setup ₹6,000 + ₹2,000/mahina, ek din mein set. 90-second demo bhej doon? ${OPT_OUT}`,
   },
   {
     id: 'competitor',
     label: 'Competitive edge',
     description: 'Focus: neighbours are already automating.',
     template: (b) =>
-      `Namaste ${b.name} 🙏 Aas-paas ke kuch businesses already WhatsApp par auto-reply aur lead capture use kar rahe hain. ` +
+      `Namaste ${b.name} 🙏 Aapke area mein kuch ${b.category} businesses already WhatsApp par auto-reply aur lead capture use kar rahe hain. ` +
       `Main aapke liye bhi aisa AI assistant set kar sakta hoon — turant reply, har lead save, aapke number par. ` +
-      `Ek din mein ready. Demo dekhna chahenge? ${OPT_OUT}`,
+      `Setup ₹6,000 + ₹2,000/mahina. Demo dekhna chahenge? ${OPT_OUT}`,
   },
   {
     id: 'time-saver',
     label: 'Time saver',
     description: 'Focus: stop repeating the same answers all day.',
     template: (b) =>
-      `${b.name} 🙏 Din bhar same sawaalon ke jawab dete-dete time chala jaata hai — price, timing, availability. ` +
+      `${b.name} 🙏 Din bhar same sawaalon ke jawab dete-dete time chala jaata hai — "kitne ka aayega?", timing, availability. ` +
       `Main ek AI assistant set karta hoon jo ye sab khud handle karta hai aur sirf serious leads aapke paas bhejta hai. ` +
-      `Aapke WhatsApp par, ek din mein. Demo bhej doon? ${OPT_OUT}`,
+      `Setup ₹6,000 + ₹2,000/mahina — ek saved job mein vasool. Live demo bhej doon? ${OPT_OUT}`,
   },
 ];
 

@@ -76,7 +76,7 @@ export default function OutreachBoard() {
 
   const total = advances.reduce((s, a) => s + a.amount, 0) + trackerTotal(track);
   const pct = Math.min(100, Math.round((total / GOAL) * 100));
-  const dealsLeft = Math.max(0, Math.ceil((GOAL - total) / 8000));
+  const dealsLeft = Math.max(0, Math.ceil((GOAL - total) / 9000));
 
   const pipeline = useMemo(() => {
     const base: Record<TrackStatus, number> = { new: 0, sent: 0, replied: 0, call: 0, won: 0, lost: 0 };
@@ -182,7 +182,7 @@ export default function OutreachBoard() {
           <div className="h-full rounded-full bg-brand transition-all" style={{ width: `${pct}%` }} />
         </div>
         <div className="mt-1 text-xs text-zinc-500">
-          {pct}% to target • need ~{dealsLeft} more ₹8k deals
+          {pct}% to target • need ~{dealsLeft} more setups
         </div>
         {advances.length > 0 && (
           <div className="mt-3 flex flex-wrap gap-2">
@@ -265,7 +265,7 @@ export default function OutreachBoard() {
               onChange={(e) => setImportText(e.target.value)}
               rows={3}
               className={`${input} mt-2 w-full font-mono text-xs`}
-              placeholder="Smile Dental,dental,Geeta Colony,9811…"
+              placeholder="Sharma Plumbing,plumber,Geeta Colony,9811…"
             />
             <button
               type="button"

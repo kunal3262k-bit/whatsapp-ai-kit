@@ -5,9 +5,9 @@ import { PACKAGES, advanceOf, buildContract } from '../lib/contract';
 
 export default function ContractBuilder() {
   const [client, setClient] = useState('');
-  const [bizType, setBizType] = useState('salon');
+  const [bizType, setBizType] = useState('plumber');
   const [pkgId, setPkgId] = useState('qualifier');
-  const [amount, setAmount] = useState(8000);
+  const [amount, setAmount] = useState(6000);
   const [copied, setCopied] = useState(false);
 
   const message = useMemo(
@@ -44,14 +44,14 @@ export default function ContractBuilder() {
     <div className="grid gap-4 lg:grid-cols-2">
       <section className="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4">
         <label className="text-sm text-zinc-400">Client name</label>
-        <input className={input} value={client} onChange={(e) => setClient(e.target.value)} placeholder="e.g. Glow Salon" />
+        <input className={input} value={client} onChange={(e) => setClient(e.target.value)} placeholder="e.g. Sharma Plumbing" />
 
         <label className="mt-4 block text-sm text-zinc-400">Business type</label>
         <input
           className={input}
           value={bizType}
           onChange={(e) => setBizType(e.target.value)}
-          placeholder="salon / clinic / gym / tuition"
+          placeholder="plumber / electrician / AC repair / cleaning"
         />
 
         <label className="mt-4 block text-sm text-zinc-400">Package</label>

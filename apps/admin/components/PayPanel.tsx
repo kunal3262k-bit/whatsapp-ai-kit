@@ -14,7 +14,7 @@ export default function PayPanel() {
   const upiId = process.env.NEXT_PUBLIC_UPI_ID || '9717745568@ptsbi';
   const name = process.env.NEXT_PUBLIC_UPI_NAME || 'Kunal Sharma';
 
-  const [amount, setAmount] = useState(8000);
+  const [amount, setAmount] = useState(6000);
   const [note, setNote] = useState('');
   const [copied, setCopied] = useState<string | null>(null);
 
@@ -37,14 +37,15 @@ export default function PayPanel() {
       <div className="flex flex-wrap justify-center gap-2">
         {PAY_PILLS.map((p) => (
           <button
-            key={p}
+            key={p.label}
             type="button"
-            onClick={() => setAmount(p)}
+            onClick={() => setAmount(p.amount)}
+            title={`₹${p.amount.toLocaleString('en-IN')}`}
             className={`rounded-full border px-4 py-1.5 text-sm font-medium ${
-              amount === p ? 'border-brand bg-brand text-zinc-950' : 'border-zinc-700 text-zinc-300 hover:border-brand'
+              amount === p.amount ? 'border-brand bg-brand text-zinc-950' : 'border-zinc-700 text-zinc-300 hover:border-brand'
             }`}
           >
-            ₹{p.toLocaleString('en-IN')}
+            {p.label}
           </button>
         ))}
         <input
@@ -100,8 +101,9 @@ export default function PayPanel() {
       </div>
 
       <p className="mt-5 text-xs text-zinc-500">
-        After paying, send the screenshot on WhatsApp. Work starts immediately. No results are guaranteed —
-        the client receives a working setup and a tracked report.
+        After paying, send the screenshot on WhatsApp. Work starts immediately. Setups are one-time;
+        the care plan is billed monthly (₹2k Lite / ₹4k Plus) and the voice add-on is ₹7,999/mo.
+        No results are guaranteed — the client receives a working setup and a tracked report.
       </p>
     </div>
   );

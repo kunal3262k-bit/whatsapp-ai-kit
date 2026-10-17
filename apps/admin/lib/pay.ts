@@ -40,4 +40,17 @@ export function payApps(query: string): PayApp[] {
   ];
 }
 
-export const PAY_PILLS = [5000, 7000, 10000, 15000];
+export interface PayPill {
+  amount: number;
+  label: string;
+}
+
+/** Quick amounts: one-time setups first, then monthly care-plan / voice renewals. */
+export const PAY_PILLS: PayPill[] = [
+  { amount: 6000, label: 'Setup ₹6k' },
+  { amount: 10000, label: 'Setup ₹10k' },
+  { amount: 15000, label: 'Setup ₹15k' },
+  { amount: 2000, label: 'Care Lite ₹2k/mo' },
+  { amount: 4000, label: 'Care Plus ₹4k/mo' },
+  { amount: 7999, label: 'Voice ₹8k/mo' },
+];

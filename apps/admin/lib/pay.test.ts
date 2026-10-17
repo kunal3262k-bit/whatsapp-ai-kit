@@ -2,9 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { PAY_PILLS, buildUpiQuery, payApps, qrSrcFor, upiUri } from './pay';
 
-test('PAY_PILLS are ascending positive amounts', () => {
+test('PAY_PILLS have positive amounts and labels', () => {
   assert.ok(PAY_PILLS.length >= 3);
-  assert.ok(PAY_PILLS.every((p) => p > 0));
+  assert.ok(PAY_PILLS.every((p) => p.amount > 0));
+  assert.ok(PAY_PILLS.every((p) => typeof p.label === 'string' && p.label.length > 0));
 });
 
 test('buildUpiQuery encodes payee, amount and currency', () => {

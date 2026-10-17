@@ -19,7 +19,7 @@ test('buildContract fills client, package, advance and the no-guarantee note', (
   const msg = buildContract({ client: 'Glow Salon', bizType: 'salon', pkgId: 'qualifier', amount: 8000 });
   assert.ok(msg.includes('Glow Salon'));
   assert.ok(msg.includes('(salon)'));
-  assert.ok(msg.includes('WhatsApp AI Lead Qualifier + CRM'));
+  assert.ok(msg.includes('AI WhatsApp Lead Qualifier + CRM'));
   assert.ok(msg.includes('₹8,000'));
   assert.ok(msg.includes('Advance: ₹4,000 (50%) to start'));
   assert.ok(msg.includes('12 hours'));
@@ -29,5 +29,5 @@ test('buildContract fills client, package, advance and the no-guarantee note', (
 test('buildContract falls back to placeholder for empty client', () => {
   const msg = buildContract({ client: '', bizType: '', pkgId: 'custom', amount: 12000 });
   assert.ok(msg.includes('[client name]'));
-  assert.ok(msg.includes('Custom internal tool'));
+  assert.ok(msg.includes('Custom AI Setup'));
 });
