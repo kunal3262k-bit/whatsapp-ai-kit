@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "Akra AI — AI WhatsApp Sales Assistant | Pay once, no monthly fees",
-    "description": "AI WhatsApp assistant that greets, qualifies and answers customers 24/7, then alerts you instantly on WhatsApp. One-time setup, no subscriptions, delivered same day. Works worldwide."
+    "title": "Akra AI — AI WhatsApp Assistant for Home Services & Trades",
+    "description": "Plumbers, electricians, HVAC, cleaners, pest control: Akra answers the calls and DMs you miss, qualifies the job and alerts you instantly. One-time setup, same-day delivery, with an optional low monthly care plan."
   },
   "common": {
     "whatsappCta": "Talk to Live Demo on WhatsApp",
@@ -10,7 +10,7 @@
     "mostPopular": "Most Popular",
     "oneTime": "one-time setup",
     "delivery": "Delivery",
-    "payOnce": "Pay once. No monthly fees. Ever.",
+    "payOnce": "One-time setup, yours to keep. Care plan only if you want it.",
     "language": "Language",
     "country": "Country"
   },
@@ -22,15 +22,15 @@
     "faq": "FAQ"
   },
   "hero": {
-    "badge": "AI WhatsApp Sales Assistant",
-    "headline": "Your AI sales assistant on WhatsApp",
-    "headline2": "Pay once. No monthly fees. Delivered same day. Works worldwide.",
-    "sub": "Greets customers, qualifies leads, answers questions, and alerts you instantly on WhatsApp. One-time setup. No subscriptions.",
+    "badge": "Built for home services & trades",
+    "headline": "Never miss another job call.",
+    "headline2": "Akra answers the calls and DMs you miss — while you're on the job.",
+    "sub": "Greets customers, qualifies the job, answers your FAQs and alerts you instantly, so you're always first to reply. One-time setup, delivered same day, with a low monthly care plan only if you want it.",
     "ctaSecondary": "Try the live demo",
-    "trust": "No monthly fees · Same-day delivery · Works on your own number"
+    "trust": "One-time setup · Same-day delivery · Works on your own number · Optional care plan"
   },
   "social": {
-    "text": "Used by clinics, coaches, real-estate, salons, agencies & online businesses worldwide"
+    "text": "Made for plumbers, electricians, HVAC crews, cleaners, pest control, painters, carpenters & appliance-repair teams"
   },
   "how": {
     "title": "How it works",
@@ -50,16 +50,16 @@
   },
   "pricing": {
     "eyebrow": "Pricing",
-    "title": "Simple, one-time pricing",
-    "subtitle": "Pick the package that fits. One payment, no subscriptions, and a system that works — or we fix it free.",
+    "title": "One-time setup. Care only if you want it.",
+    "subtitle": "Pick the package that fits. Setup is a one-time payment — yours to keep. A small monthly care plan keeps your assistant hosted, monitored and improving; cancel anytime and keep every lead.",
     "cta": "Talk to Live Demo on WhatsApp",
-    "faqNote": "Prices shown in {{currency}}. Final quote confirmed on WhatsApp.",
-    "guarantee": "If it doesn't capture real leads in the first 7 days, we'll refund or fix it free.",
+    "faqNote": "Prices shown in {{currency}} for the one-time setup; the monthly care plan is billed separately. Final quote confirmed on WhatsApp.",
+    "guarantee": "7-day proof guarantee: if it doesn't do what we agreed, we fix it free or refund the setup.",
     "popular": "Most Popular",
     "tiers": {
       "starter": {
-        "name": "Starter",
-        "tagline": "For your first automation",
+        "name": "Call Rescue",
+        "tagline": "Answers the calls and DMs you miss",
         "delivery": "Within 12 hours",
         "features": [
           "Greeting + brand voice",
@@ -74,8 +74,8 @@
         ]
       },
       "pro": {
-        "name": "Pro",
-        "tagline": "Best for growing businesses",
+        "name": "Job Desk",
+        "tagline": "Qualifies the job, shares prices, books the visit",
         "delivery": "Within 8 hours",
         "features": [
           "Everything in Starter",
@@ -88,8 +88,8 @@
         ]
       },
       "premium": {
-        "name": "Premium",
-        "tagline": "Maximum power & support",
+        "name": "Always-On Desk",
+        "tagline": "Full front desk: follow-ups, reminders & handoff",
         "delivery": "Within 4–6 hours",
         "features": [
           "Everything in Pro",
@@ -105,13 +105,13 @@
   },
   "comparison": {
     "eyebrow": "Why Akra",
-    "title": "One-time fee vs. monthly tools",
-    "subtitle": "Most chatbot platforms charge you every month, forever. We build it once, on your own number.",
+    "title": "One-time setup — not rented forever",
+    "subtitle": "Most chatbot platforms charge you every month, forever. We build it once, on your own number — your assistant and its data are yours.",
     "akra": "Akra AI",
     "official": "Official / SaaS tools",
     "rows": [
       { "label": "Pricing model", "akra": "One-time setup fee", "official": "Recurring monthly subscription" },
-      { "label": "Monthly cost after setup", "akra": "No monthly fees", "official": "You keep paying every month" },
+      { "label": "Monthly cost after setup", "akra": "Optional care plan only", "official": "You keep paying every month" },
       { "label": "Time to go live", "akra": "Same day (4–12 hours)", "official": "Days to weeks + approval" },
       { "label": "WhatsApp Business API approval", "akra": "Not required", "official": "Required" },
       { "label": "Runs on your existing number", "akra": "Yes", "official": "Often a new number" },
@@ -127,16 +127,17 @@
       { "q": "Is this the official WhatsApp Business API?", "a": "No. We connect to your own WhatsApp as a linked device — no Meta Business API approval and no per-message fees. It behaves like you, replying from your own number." },
       { "q": "Is there a risk of my number getting banned?", "a": "We build to WhatsApp's rules: replies only (never cold spam), human-like pacing, rate limits and instant opt-out. Used as a responder rather than a bulk sender, the risk stays low." },
       { "q": "Do I need a new WhatsApp number?", "a": "No. We set it up on a number you already use, or a fresh one if you prefer to keep it separate." },
-      { "q": "How fast is delivery?", "a": "Starter within 12 hours, Pro within 8 hours, Premium within 4–6 hours — after we have your business details." },
+      { "q": "How fast is delivery?", "a": "Call Rescue within 12 hours, Job Desk within 8 hours, Always-On Desk within 4–6 hours — after we have your business details." },
       { "q": "Which languages does it support?", "a": "Any language your customers write in, including English, Hindi, Arabic, Spanish, Portuguese and Hinglish." },
-      { "q": "Is there any monthly fee?", "a": "No. You pay once for the setup. There are no subscriptions and no per-message charges." },
-      { "q": "What if it doesn't work for my business?", "a": "If it doesn't capture real leads in the first 7 days, we'll refund or fix it free. We guarantee a working system." },
-      { "q": "Do you support my industry?", "a": "Yes. It's fully config-driven — clinics, real-estate, salons, gyms, tuition, agencies, e-commerce and more." }
+      { "q": "Is there any monthly fee?", "a": "The setup is a one-time payment and it's yours to keep. To keep it hosted, monitored and improving we offer a small monthly care plan (from ₹2,000/mo) — it's optional, and you can cancel anytime without losing your setup or your leads." },
+      { "q": "Can it answer the phone, not just WhatsApp?", "a": "Yes — our Voice add-on lets the AI answer your missed calls too. It's a monthly add-on (from ₹7,999/mo) you can switch on any time after go-live." },
+      { "q": "What if it doesn't work for my business?", "a": "If it doesn't do what we agreed in the first 7 days, we'll fix it free or refund the setup. The guarantee covers our delivery — not a number of jobs or sales." },
+      { "q": "Do you support my trade?", "a": "Yes. It's config-driven and tuned for home services — plumbers, electricians, AC/HVAC, cleaning, pest control, painters, carpenters, appliance repair and more." }
     ]
   },
   "finalCta": {
-    "title": "Ready to stop losing leads?",
-    "body": "Message us now — we'll show you a live demo on WhatsApp and set up your assistant the same day.",
+    "title": "First to reply gets the job.",
+    "body": "Message us now — we'll show you a live demo and put an assistant on your WhatsApp the same day. One-time setup, with a care plan only if you want it.",
     "cta": "Talk to Live Demo on WhatsApp"
   },
   "footer": {
@@ -171,14 +172,14 @@
   },
   "offer": {
     "eyebrow": "Akra AI Automations",
-    "title": "Stop losing customers who message you after hours.",
-    "subtitle": "A custom AI assistant on your own WhatsApp number that replies instantly, qualifies leads, answers questions, and alerts you — delivered in under a day.",
+    "title": "Stop losing the job because you couldn't pick up.",
+    "subtitle": "A custom AI assistant on your own WhatsApp number — with an optional voice receptionist — that replies instantly, qualifies the job, books the visit and alerts you. Delivered in under a day.",
     "servicesTitle": "What we build",
     "services": [
-      { "title": "WhatsApp AI Lead Qualifier", "body": "Answers every enquiry instantly, asks your qualifying questions, and saves each lead with an instant alert.", "tag": "Most popular" },
-      { "title": "Appointment Booking + Reminders", "body": "Lets customers book slots in chat and sends automatic reminders to cut no-shows.", "tag": "" },
-      { "title": "AI Content Engine", "body": "Turns one business description into 7–14 days of posts, captions and hashtags.", "tag": "" },
-      { "title": "Internal Tools", "body": "Fee reminders, order bots, inventory alerts — small bots that save hours every week.", "tag": "" }
+      { "title": "WhatsApp AI Receptionist", "body": "Answers every enquiry instantly, asks your qualifying questions, books the visit and saves each lead with an instant alert to you.", "tag": "Most popular" },
+      { "title": "Voice Receptionist Add-on", "body": "The AI answers your missed calls too — takes the address and the problem, and texts you the job before you're off the ladder.", "tag": "" },
+      { "title": "Booking + Reminders", "body": "In-chat booking with your slots and automatic reminders that cut no-shows to free up your day.", "tag": "" },
+      { "title": "Follow-ups & Win-backs", "body": "Automatic follow-ups on open quotes and reminders for repeat/maintenance customers, so no job goes cold.", "tag": "" }
     ]
   }
 }

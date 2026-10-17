@@ -32,6 +32,21 @@ export interface DemoSet {
 /* ── India · Hinglish ─────────────────────────────────────── */
 const IN: DemoPreset[] = [
   {
+    id: 'plumber',
+    label: 'Plumber',
+    emoji: '🔧',
+    business: 'Sharma Plumbing Services',
+    greeting: 'Namaste! Sharma Plumbing se baat kar rahe hain 🔧 Main aapki problem note kar leta hoon.',
+    intro: 'Bas 3 quick sawaal, phir main aapka visit slot set kar deta hoon:',
+    fields: [
+      { key: 'issue', label: 'Problem', question: 'Kya problem hai?', type: 'choice', options: ['Tap / pipe leak', 'Blocked drain', 'Geyser / boiler', 'Bathroom fitting', 'Other'] },
+      { key: 'when', label: 'Timing', question: 'Kab aana convenient hoga?', type: 'choice', options: ['Abhi (emergency)', 'Aaj', 'Kal', 'Iss hafte'] },
+      { key: 'area', label: 'Area', question: 'Aapka area / address?', type: 'text' },
+      { key: 'name', label: 'Name', question: 'Aapka shubh naam?', type: 'text' },
+    ],
+    handoff: 'Theek hai! 🔧 Aapki detail note ho gayi. Hamari team 15 minute mein slot confirm kar degi.',
+  },
+  {
     id: 'dental',
     label: 'Dental Clinic',
     emoji: '🦷',
@@ -158,6 +173,21 @@ const IN: DemoPreset[] = [
 
 /* ── US / UK / Global · English ───────────────────────────── */
 const US: DemoPreset[] = [
+  {
+    id: 'hvac',
+    label: 'HVAC / AC',
+    emoji: '❄️',
+    business: 'Summit Air & Heating',
+    greeting: 'Hi! You’ve reached Summit Air & Heating 👋 I’m the after-hours assistant.',
+    intro: 'A couple of quick questions and I’ll get a tech booked for you:',
+    fields: [
+      { key: 'issue', label: 'Problem', question: 'What’s going on?', type: 'choice', options: ['No heat / furnace', 'No cooling / AC', 'Maintenance tune-up', 'New install quote', 'Other'] },
+      { key: 'when', label: 'Timing', question: 'How soon do you need someone?', type: 'choice', options: ['Emergency (today)', 'Tomorrow', 'This week', 'Just a quote'] },
+      { key: 'zone', label: 'Area', question: 'Which area / zip code?', type: 'text' },
+      { key: 'name', label: 'Name', question: 'And your name?', type: 'text' },
+    ],
+    handoff: 'Got it — I’ve logged your request. Our dispatcher will call you back within a few minutes to confirm the visit.',
+  },
   {
     id: 'dental',
     label: 'Dental Clinic',

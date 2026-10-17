@@ -38,13 +38,13 @@ export interface Country {
 export const DEFAULT_COUNTRY: CountryCode = 'XX';
 
 export const COUNTRIES: Country[] = [
-  { code: 'IN', flag: '🇮🇳', name: 'India', currency: 'INR', locale: 'en', locales: ['en', 'hi'], prices: { starter: 8999, pro: 14999, premium: 19999 } },
-  { code: 'US', flag: '🇺🇸', name: 'United States', currency: 'USD', locale: 'en', locales: ['en'], prices: { starter: 99, pro: 179, premium: 249 } },
-  { code: 'GB', flag: '🇬🇧', name: 'United Kingdom', currency: 'GBP', locale: 'en', locales: ['en'], prices: { starter: 79, pro: 149, premium: 199 } },
+  { code: 'IN', flag: '🇮🇳', name: 'India', currency: 'INR', locale: 'en', locales: ['en', 'hi'], prices: { starter: 6000, pro: 10000, premium: 15000 } },
+  { code: 'US', flag: '🇺🇸', name: 'United States', currency: 'USD', locale: 'en', locales: ['en'], prices: { starter: 199, pro: 349, premium: 549 } },
+  { code: 'GB', flag: '🇬🇧', name: 'United Kingdom', currency: 'GBP', locale: 'en', locales: ['en'], prices: { starter: 179, pro: 299, premium: 479 } },
   { code: 'AE', flag: '🇦🇪', name: 'United Arab Emirates', currency: 'AED', locale: 'en', locales: ['en', 'ar'], prices: { starter: 365, pro: 659, premium: 915 } },
   { code: 'SA', flag: '🇸🇦', name: 'Saudi Arabia', currency: 'SAR', locale: 'ar', locales: ['ar', 'en'], prices: { starter: 375, pro: 675, premium: 935 } },
   { code: 'BR', flag: '🇧🇷', name: 'Brazil', currency: 'BRL', locale: 'pt', locales: ['pt'], prices: { starter: 499, pro: 899, premium: 1249 } },
-  { code: 'XX', flag: '🌍', name: 'Global / Other', currency: 'USD', locale: 'en', locales: ['en'], prices: { starter: 99, pro: 179, premium: 249 } },
+  { code: 'XX', flag: '🌍', name: 'Global / Other', currency: 'USD', locale: 'en', locales: ['en'], prices: { starter: 199, pro: 349, premium: 549 } },
 ];
 
 const byCode = new Map<string, Country>(COUNTRIES.map((c) => [c.code, c]));
