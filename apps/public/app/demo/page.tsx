@@ -29,6 +29,58 @@ function initMsgs(preset: DemoPreset): Msg[] {
   ];
 }
 
+const RETRY: Record<string, string> = {
+  hinglish: 'Maaf kijiye, samajh nahi aaya 🙏 ',
+  en: 'Sorry, I didn’t catch that. ',
+  ar: 'عذراً، لم أفهم ذلك. ',
+  pt: 'Desculpe, não entendi. ',
+};
+
+const NONSENSE = new Set([
+  'none', 'n/a', 'na', 'no', 'nothing', 'nil', 'null', 'x', 'xx', 'abc', 'asdf',
+  'test', 'idk', 'dont know', "don't know", '?', '-', '.', '..', '...',
+  'whatever', 'anything', 'any', 'nope', 'nah', 'nil', 'dunno',
+]);
+
+const GREETINGS = new Set([
+  'hi', 'hello', 'hey', 'heya', 'hii', 'hiii', 'hai', 'oye', 'yo', 'hola',
+  'namaste', 'namaskar', 'namaskaar', 'pranam', 'assalamualaikum', 'salam',
+]);
+
+function parseAnswer(
+  field: DemoPreset['fields'][number],
+  text: string
+): { ok: true; value: string } | { ok: false } {
+  const t = text.trim();
+  const norm = t.toLowerCase().replace(/[^a-z0-9/ ]/g, '').trim();
+  const words = norm.split(/\s+/).filter(Boolean);
+  // Reject greetings when asking for specific details
+  if (words.length > 0 && words.every((w) => GREETINGS.has(w) || w === 'ji' || w === 'g')) {
+    return { ok: false };
+  }
+  if (GREETINGS.has(norm) && words.length <= 2) {
+    return { ok: false };
+  }
+  if (field.type === 'choice' && field.options?.length) {
+    const n = parseInt(t, 10);
+    if (!Number.isNaN(n) && n >= 1 && n <= field.options.length) {
+      return { ok: true, value: field.options[n - 1]! };
+    }
+    const lower = t.toLowerCase();
+    const match = field.options.find(
+      (o) => o.toLowerCase().includes(lower) || lower.includes(o.toLowerCase())
+    );
+    if (match && lower.replace(/[^a-z0-9]/g, '').length >= 2) {
+      return { ok: true, value: match };
+    }
+    return { ok: false };
+  }
+  if (!/[a-z0-9]/.test(norm)) return { ok: false };
+  if (NONSENSE.has(norm)) return { ok: false };
+  if (norm.replace(/[^a-z]/g, '').length < 2 && !/\d/.test(norm)) return { ok: false };
+  return { ok: true, value: t };
+}
+
 export default function DemoPage() {
   const { t, country, locale } = useApp();
   const set = useMemo(() => resolveDemoSet(country.code, locale), [country.code, locale]);
@@ -62,11 +114,17 @@ export default function DemoPage() {
     const text = input.trim();
     if (!text || done) return;
     const field = preset.fields[step]!;
-    let value = text;
-    if (field.type === 'choice' && field.options?.length) {
-      const n = parseInt(text, 10);
-      if (!Number.isNaN(n) && n >= 1 && n <= field.options.length) value = field.options[n - 1]!;
+    const parsed = parseAnswer(field, text);
+    if (!parsed.ok) {
+      setMsgs((m) => [
+        ...m,
+        { role: 'user', text },
+        { role: 'bot', text: (RETRY[set.lang] ?? RETRY.en) + questionFor(preset, step) },
+      ]);
+      setInput('');
+      return;
     }
+    const value = parsed.value;
     const nextAnswers = { ...answers, [field.key]: value };
     const nextStep = step + 1;
     const next: Msg[] = [...msgs, { role: 'user', text }];
